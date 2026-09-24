@@ -1,0 +1,1 @@
+import type { MaterialEntry,MaterialInput } from "@/features/materials/types/material";export interface MaterialRepository{getByProject(projectId:string):Promise<MaterialEntry[]>;create(input:MaterialInput):Promise<MaterialEntry>;update(id:string,input:MaterialInput):Promise<MaterialEntry>;delete(id:string):Promise<void>}
