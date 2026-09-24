@@ -1,0 +1,2 @@
+import { Button } from "./Button";
+export function ErrorState({title="Unable to load data",description="The requested information could not be retrieved.",onRetry}:{title?:string;description?:string;onRetry?:()=>void}){return <div className="empty-state" role="alert"><strong>{title}</strong><p className="muted">{description}</p>{onRetry&&<Button variant="secondary" onClick={onRetry}>Try again</Button>}</div>}
