@@ -1,0 +1,1 @@
+export type WorkforceCategory="management"|"engineering"|"supervision"|"skilled"|"unskilled"|"specialist";export interface ManpowerEntry{id:string;projectId:string;date:string;contractor:string;trade:string;category:WorkforceCategory;headcount:number;regularHours:number;overtimeHours:number;remarks?:string}export type ManpowerInput=Omit<ManpowerEntry,"id">;
