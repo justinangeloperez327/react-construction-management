@@ -1,0 +1,1 @@
+import { MockDailyProgressRepository } from "./dailyProgress.mock.repository";export const dailyProgressRepository=new MockDailyProgressRepository();export type { DailyProgressRepository } from "./dailyProgress.repository";
