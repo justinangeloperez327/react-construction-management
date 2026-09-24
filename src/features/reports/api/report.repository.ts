@@ -1,0 +1,1 @@
+import type { ProjectReport,ProjectReportInput } from "@/features/reports/types/report";export interface ReportRepository{getByProject(projectId:string):Promise<ProjectReport[]>;create(input:ProjectReportInput):Promise<ProjectReport>;update(id:string,input:ProjectReportInput):Promise<ProjectReport>;delete(id:string):Promise<void>}
