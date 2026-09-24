@@ -1,0 +1,1 @@
+import type { Rfi,RfiInput } from "@/features/rfis/types/rfi";export interface RfiRepository{getByProject(projectId:string):Promise<Rfi[]>;create(input:RfiInput):Promise<Rfi>;update(id:string,input:RfiInput):Promise<Rfi>;delete(id:string):Promise<void>}
