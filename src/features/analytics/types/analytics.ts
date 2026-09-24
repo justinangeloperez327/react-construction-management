@@ -1,0 +1,1 @@
+export interface AnalyticsMetric{id:string;label:string;value:number;unit:"count"|"percent"|"currency"|"days"|"hours";trend?:number;context:string}export interface AnalyticsSnapshot{projectId:string;dataDate:string;metrics:AnalyticsMetric[]}
