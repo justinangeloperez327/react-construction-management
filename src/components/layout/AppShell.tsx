@@ -1,3 +1,6 @@
-import { NavLink,Outlet } from "react-router-dom";
-const nav=[["/","Dashboard"],["/projects","Projects"]] as const;
-export function AppShell(){return <div className="shell"><aside className="sidebar"><div className="brand">Construction Management</div><nav className="nav" aria-label="Primary navigation">{nav.map(([to,label])=><NavLink key={to} to={to} end={to==="/"}>{label}</NavLink>)}</nav></aside><div className="workspace"><header className="header"><strong>Project Operations</strong><span className="muted">Construction workspace</span></header><main className="content" id="main-content"><Outlet/></main></div></div>}
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import { AppHeader } from "./AppHeader";
+import { Breadcrumbs } from "./Breadcrumbs";
+import { Sidebar } from "./Sidebar";
+export function AppShell(){const [navigationOpen,setNavigationOpen]=useState(false);return <div className="shell"><a className="skip-link" href="#main-content">Skip to content</a><Sidebar open={navigationOpen} onClose={()=>setNavigationOpen(false)}/><div className="workspace"><AppHeader onMenu={()=>setNavigationOpen(true)}/><main className="content" id="main-content" tabIndex={-1}><Breadcrumbs/><Outlet/></main></div></div>}
