@@ -1,0 +1,1 @@
+import { MockProcurementRepository } from "./procurement.mock.repository";export const procurementRepository=new MockProcurementRepository();export type { ProcurementRepository } from "./procurement.repository";
