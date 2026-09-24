@@ -1,0 +1,2 @@
+import { NavLink, Outlet } from "react-router-dom";
+export function AppShell(){return <div className="shell"><aside className="sidebar"><div className="brand">Construction Management</div><nav className="nav"><NavLink to="/">Dashboard</NavLink><NavLink to="/projects">Projects</NavLink></nav></aside><div className="workspace"><header className="header"><strong>Project Operations</strong><span className="muted">Frontend prototype</span></header><main className="content"><Outlet /></main></div></div>}
