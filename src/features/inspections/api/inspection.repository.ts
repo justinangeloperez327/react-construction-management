@@ -1,0 +1,1 @@
+import type { Inspection,InspectionInput } from "@/features/inspections/types/inspection";export interface InspectionRepository{getByProject(projectId:string):Promise<Inspection[]>;create(input:InspectionInput):Promise<Inspection>;update(id:string,input:InspectionInput):Promise<Inspection>;delete(id:string):Promise<void>}
