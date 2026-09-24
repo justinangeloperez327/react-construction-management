@@ -1,0 +1,1 @@
+import type { ProcurementInput,ProcurementItem } from "@/features/procurement/types/procurement";export interface ProcurementRepository{getByProject(projectId:string):Promise<ProcurementItem[]>;create(input:ProcurementInput):Promise<ProcurementItem>;update(id:string,input:ProcurementInput):Promise<ProcurementItem>;delete(id:string):Promise<void>}
