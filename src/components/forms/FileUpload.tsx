@@ -1,0 +1,3 @@
+import { Upload } from "lucide-react";
+import { useRef,type ChangeEvent } from "react";
+export function FileUpload({label="Upload files",accept,multiple=true,onFiles}:{label?:string;accept?:string;multiple?:boolean;onFiles?:(files:File[])=>void}){const ref=useRef<HTMLInputElement>(null);const change=(e:ChangeEvent<HTMLInputElement>)=>onFiles?.(Array.from(e.target.files??[]));return <div className="file-upload"><Upload size={24} aria-hidden="true"/><strong>{label}</strong><span className="muted">Choose files from your device</span><button type="button" className="button button--secondary" onClick={()=>ref.current?.click()}>Browse files</button><input ref={ref} className="visually-hidden" type="file" accept={accept} multiple={multiple} onChange={change}/></div>}
