@@ -1,0 +1,1 @@
+import type { QualityRecord,QualityRecordInput } from "@/features/quality/types/quality";export interface QualityRepository{getByProject(projectId:string):Promise<QualityRecord[]>;create(input:QualityRecordInput):Promise<QualityRecord>;update(id:string,input:QualityRecordInput):Promise<QualityRecord>;delete(id:string):Promise<void>}
