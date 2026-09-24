@@ -1,0 +1,3 @@
+import type { ReactNode } from "react";
+export type TabItem={id:string;label:string;content:ReactNode};
+export function Tabs({items,activeId,onChange,label="Sections"}:{items:TabItem[];activeId:string;onChange:(id:string)=>void;label?:string}){const active=items.find(i=>i.id===activeId)??items[0];return <div><div className="tabs" role="tablist" aria-label={label}>{items.map(item=><button key={item.id} role="tab" aria-selected={item.id===active?.id} className="tab" onClick={()=>onChange(item.id)}>{item.label}</button>)}</div>{active&&<div className="tab-panel" role="tabpanel">{active.content}</div>}</div>}
