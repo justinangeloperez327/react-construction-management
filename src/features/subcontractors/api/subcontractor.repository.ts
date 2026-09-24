@@ -1,0 +1,1 @@
+import type { SubcontractorInput,SubcontractorPackage } from "@/features/subcontractors/types/subcontractor";export interface SubcontractorRepository{getByProject(projectId:string):Promise<SubcontractorPackage[]>;create(input:SubcontractorInput):Promise<SubcontractorPackage>;update(id:string,input:SubcontractorInput):Promise<SubcontractorPackage>;delete(id:string):Promise<void>}
