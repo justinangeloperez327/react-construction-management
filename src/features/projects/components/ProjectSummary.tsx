@@ -1,0 +1,6 @@
+import { Building2,CalendarDays,MapPin,UserRound } from "lucide-react";
+import { Card,CardContent,CardHeader,Progress,StatusBadge } from "@/components/ui";
+import { getStatusTone } from "@/design/status";
+import type { Project } from "@/features/projects/types/project";
+import { humanize } from "@/shared/utils";
+export function ProjectSummary({project}:{project:Project}){return <div className="project-summary-grid"><Card><CardHeader title="Project overview"/><CardContent><dl className="detail-list"><div><dt>Project number</dt><dd>{project.projectNumber}</dd></div><div><dt>Status</dt><dd><StatusBadge tone={getStatusTone(project.status)}>{humanize(project.status)}</StatusBadge></dd></div><div><dt>Progress</dt><dd><Progress value={project.progress}/></dd></div><div><dt>Planned completion</dt><dd><CalendarDays size={16}/>{project.plannedCompletion}</dd></div></dl></CardContent></Card><Card><CardHeader title="Project parties"/><CardContent><dl className="detail-list"><div><dt>Client</dt><dd><Building2 size={16}/>{project.client}</dd></div><div><dt>Project manager</dt><dd><UserRound size={16}/>{project.manager}</dd></div><div><dt>Location</dt><dd><MapPin size={16}/>Not specified</dd></div></dl></CardContent></Card></div>}
