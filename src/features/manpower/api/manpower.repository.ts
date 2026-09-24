@@ -1,0 +1,1 @@
+import type { ManpowerEntry,ManpowerInput } from "@/features/manpower/types/manpower";export interface ManpowerRepository{getByProject(projectId:string):Promise<ManpowerEntry[]>;create(input:ManpowerInput):Promise<ManpowerEntry>;delete(id:string):Promise<void>}
