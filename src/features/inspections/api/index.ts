@@ -1,0 +1,1 @@
+import { MockInspectionRepository } from "./inspection.mock.repository";export const inspectionRepository=new MockInspectionRepository();export type { InspectionRepository } from "./inspection.repository";
