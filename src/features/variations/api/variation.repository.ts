@@ -1,0 +1,1 @@
+import type { Variation,VariationInput } from "@/features/variations/types/variation";export interface VariationRepository{getByProject(projectId:string):Promise<Variation[]>;create(input:VariationInput):Promise<Variation>;update(id:string,input:VariationInput):Promise<Variation>;delete(id:string):Promise<void>}
