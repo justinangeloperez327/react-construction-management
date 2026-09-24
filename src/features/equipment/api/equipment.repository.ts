@@ -1,0 +1,1 @@
+import type { EquipmentEntry,EquipmentInput } from "@/features/equipment/types/equipment";export interface EquipmentRepository{getByProject(projectId:string):Promise<EquipmentEntry[]>;create(input:EquipmentInput):Promise<EquipmentEntry>;update(id:string,input:EquipmentInput):Promise<EquipmentEntry>;delete(id:string):Promise<void>}
