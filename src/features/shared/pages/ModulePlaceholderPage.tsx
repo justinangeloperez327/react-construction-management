@@ -1,0 +1,3 @@
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Card,CardContent,CardHeader } from "@/components/ui";
+export function ModulePlaceholderPage({title,description}:{title:string;description:string}){return <><PageHeader title={title} description={description}/><Card><CardHeader title="Module foundation" description="Navigation is active. Business workflows will be implemented in their planned development group."/><CardContent><p className="muted">This route is intentionally available now so the application shell can be validated before feature implementation.</p></CardContent></Card></>}
