@@ -1,0 +1,3 @@
+import type { ProjectRepository } from "./project.repository";
+import type { Project } from "@/features/projects/types/project";
+export class HttpProjectRepository implements ProjectRepository{constructor(private readonly baseUrl:string){}async getAll():Promise<Project[]>{const response=await fetch(`${this.baseUrl}/projects`);if(!response.ok)throw new Error("Unable to load projects");return response.json() as Promise<Project[]>}async getById(id:string):Promise<Project>{const response=await fetch(`${this.baseUrl}/projects/${id}`);if(!response.ok)throw new Error("Unable to load project");return response.json() as Promise<Project>}}
