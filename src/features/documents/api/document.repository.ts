@@ -1,0 +1,1 @@
+import type { ProjectDocument,ProjectDocumentInput } from "@/features/documents/types/document";export interface DocumentRepository{getByProject(projectId:string):Promise<ProjectDocument[]>;create(input:ProjectDocumentInput):Promise<ProjectDocument>;update(id:string,input:ProjectDocumentInput):Promise<ProjectDocument>;delete(id:string):Promise<void>}
