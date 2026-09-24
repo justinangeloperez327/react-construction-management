@@ -1,0 +1,2 @@
+import type { ApiErrorBody } from "./types";
+export class ApiError extends Error{constructor(message:string,public readonly status:number,public readonly code?:string,public readonly fieldErrors?:Record<string,string[]>){super(message);this.name="ApiError"}static async fromResponse(response:Response){let body:ApiErrorBody={};try{body=await response.json() as ApiErrorBody}catch{body={}}return new ApiError(body.message??`Request failed with status ${response.status}`,response.status,body.code,body.errors)}}
