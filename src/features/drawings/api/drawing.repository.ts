@@ -1,0 +1,1 @@
+import type { Drawing,DrawingInput } from "@/features/drawings/types/drawing";export interface DrawingRepository{getByProject(projectId:string):Promise<Drawing[]>;create(input:DrawingInput):Promise<Drawing>;update(id:string,input:DrawingInput):Promise<Drawing>;delete(id:string):Promise<void>}
