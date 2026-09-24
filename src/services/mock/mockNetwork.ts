@@ -1,0 +1,2 @@
+export type MockNetworkOptions={minDelay?:number;maxDelay?:number;failureRate?:number};
+export async function simulateNetwork({minDelay=120,maxDelay=420,failureRate=0}:MockNetworkOptions={}){const delay=Math.floor(minDelay+Math.random()*(maxDelay-minDelay));await new Promise(resolve=>setTimeout(resolve,delay));if(failureRate>0&&Math.random()<failureRate)throw new Error("Simulated network failure")}
