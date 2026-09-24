@@ -1,0 +1,1 @@
+import type { SafetyRecord,SafetyRecordInput } from "@/features/safety/types/safety";export interface SafetyRepository{getByProject(projectId:string):Promise<SafetyRecord[]>;create(input:SafetyRecordInput):Promise<SafetyRecord>;update(id:string,input:SafetyRecordInput):Promise<SafetyRecord>;delete(id:string):Promise<void>}
