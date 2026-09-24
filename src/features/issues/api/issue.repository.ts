@@ -1,0 +1,1 @@
+import type { ProjectIssue,ProjectIssueInput } from "@/features/issues/types/issue";export interface IssueRepository{getByProject(projectId:string):Promise<ProjectIssue[]>;create(input:ProjectIssueInput):Promise<ProjectIssue>;update(id:string,input:ProjectIssueInput):Promise<ProjectIssue>;delete(id:string):Promise<void>}
