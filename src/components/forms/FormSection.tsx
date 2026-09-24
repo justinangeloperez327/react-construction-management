@@ -1,0 +1,2 @@
+import type { PropsWithChildren,ReactNode } from "react";
+export function FormSection({title,description,action,children}:PropsWithChildren<{title:string;description?:string;action?:ReactNode}>){return <section className="form-section"><header className="form-section-header"><div><h2>{title}</h2>{description&&<p className="muted">{description}</p>}</div>{action}</header><div className="form-grid">{children}</div></section>}
