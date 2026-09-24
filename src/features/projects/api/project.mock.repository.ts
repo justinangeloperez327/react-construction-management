@@ -1,0 +1,4 @@
+import type { ProjectRepository } from "./project.repository";
+import type { Project } from "@/features/projects/types/project";
+const projects:Project[]=[{id:"1",projectNumber:"CM-00049",name:"Commercial Building Development",client:"Example Client",manager:"Project Manager",progress:68,status:"active",plannedCompletion:"2027-03-31"},{id:"2",projectNumber:"CM-00050",name:"Infrastructure Works",client:"Example Client",manager:"Construction Manager",progress:42,status:"active",plannedCompletion:"2027-08-15"}];
+export class MockProjectRepository implements ProjectRepository{async getAll(){await new Promise(r=>setTimeout(r,150));return structuredClone(projects)}async getById(id:string){await new Promise(r=>setTimeout(r,100));const project=projects.find(p=>p.id===id);if(!project)throw new Error("Project not found");return structuredClone(project)}}
