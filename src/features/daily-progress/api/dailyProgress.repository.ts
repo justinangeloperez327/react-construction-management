@@ -1,0 +1,1 @@
+import type { DailyProgressInput,DailyProgressReport } from "@/features/daily-progress/types/dailyProgress";export interface DailyProgressRepository{getByProject(projectId:string):Promise<DailyProgressReport[]>;create(input:DailyProgressInput):Promise<DailyProgressReport>;delete(id:string):Promise<void>}
