@@ -1,0 +1,1 @@
+import type { CostInput,CostItem } from "@/features/costs/types/cost";export interface CostRepository{getByProject(projectId:string):Promise<CostItem[]>;create(input:CostInput):Promise<CostItem>;update(id:string,input:CostInput):Promise<CostItem>;delete(id:string):Promise<void>}
