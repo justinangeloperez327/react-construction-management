@@ -1,0 +1,1 @@
+import { MockNotificationRepository } from "./notification.mock.repository";export const notificationRepository=new MockNotificationRepository();export type { NotificationRepository } from "./notification.repository";
