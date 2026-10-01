@@ -1,1 +1,1 @@
-import { MockUserRepository } from "./user.mock.repository";export const userRepository=new MockUserRepository();export type { UserRepository } from "./user.repository";
+import { selectRepository } from "@/services/api";import { HttpUserRepository } from "./user.http.repository";import { MockUserRepository } from "./user.mock.repository";export const userRepository=selectRepository(()=>new MockUserRepository(),()=>new HttpUserRepository());export type { UserRepository } from "./user.repository";
