@@ -1,4 +1,1 @@
-import { MockProjectRepository } from "./project.mock.repository";
-import { HttpProjectRepository } from "./project.http.repository";
-const provider=import.meta.env.VITE_DATA_PROVIDER ?? "mock";
-export const projectRepository=provider==="http"?new HttpProjectRepository(import.meta.env.VITE_API_BASE_URL ?? "/api/v1"):new MockProjectRepository();
+import { env } from "@/app/env";import { selectRepository } from "@/services/api";import { HttpProjectRepository } from "./project.http.repository";import { MockProjectRepository } from "./project.mock.repository";export const projectRepository=selectRepository(()=>new MockProjectRepository(),()=>new HttpProjectRepository(env.VITE_API_BASE_URL));export type { ProjectRepository } from "./project.repository";
