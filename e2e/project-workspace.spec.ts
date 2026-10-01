@@ -3,7 +3,7 @@ import { expect,test } from "@playwright/test";
 test("opens a project and navigates core modules from the sidebar",async({page},testInfo)=>{
   test.skip(testInfo.project.name.includes("mobile"),"desktop sidebar journey");
   await page.goto("/projects");
-  await page.getByRole("link",{name:/CM-00049/}).click();
+  await page.getByRole("link",{name:"CM-00049",exact:true}).click();
   await expect(page).toHaveURL(/\/projects\/1\/overview/);
   await expect(page.getByRole("heading",{name:"Commercial Building Development",exact:true})).toBeVisible();
 

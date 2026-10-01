@@ -8,8 +8,9 @@ test("mobile sidebar exposes grouped project navigation",async({page},testInfo)=
   const drawer=page.getByRole("complementary",{name:"Mobile navigation"});
   await expect(drawer).toBeVisible();
 
-  await drawer.locator("summary").filter({hasText:"Execution"}).click();
-  await drawer.getByRole("link",{name:"Daily Progress",exact:true}).click();
+  const dailyProgress=drawer.getByRole("link",{name:"Daily Progress",exact:true});
+  if(!await dailyProgress.isVisible())await drawer.locator("summary").filter({hasText:"Execution"}).click();
+  await dailyProgress.click();
   await expect(page).toHaveURL(/\/projects\/1\/daily-progress/);
   await expect(page.getByRole("complementary",{name:"Mobile navigation"})).toHaveCount(0);
 });
