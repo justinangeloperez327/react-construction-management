@@ -26,7 +26,7 @@ function Navigation({projectId,onNavigate}:{projectId?:string;onNavigate?:()=>vo
     {projectGroups.length>0&&<div className="grid gap-1.5">
       {projectGroups.map(group=>{
         const active=group.items.some(item=>item.to===pathname);
-        return <details className="sidebar-nav-group group rounded-lg" defaultOpen={active} key={group.label+":"+pathname}>
+        return <details className="sidebar-nav-group group rounded-lg" open={active||undefined} key={group.label+":"+pathname}>
           <summary className="flex cursor-pointer items-center justify-between gap-2 rounded-lg px-3 py-2 text-[11px] font-bold uppercase tracking-[.07em] text-slate-400 transition hover:bg-slate-50 hover:text-slate-700 dark:hover:bg-slate-900 dark:hover:text-slate-200">
             <span>{group.label}</span>
             <ChevronDown size={14} className="transition-transform group-open:rotate-180" aria-hidden="true"/>
