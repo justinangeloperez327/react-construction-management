@@ -1,1 +1,1 @@
-import { MockRfiRepository } from "./rfi.mock.repository";export const rfiRepository=new MockRfiRepository();export type { RfiRepository } from "./rfi.repository";
+import { selectRepository } from "@/services/api";import { HttpRfiRepository } from "./rfi.http.repository";import { MockRfiRepository } from "./rfi.mock.repository";export const rfiRepository=selectRepository(()=>new MockRfiRepository(),()=>new HttpRfiRepository());export type { RfiRepository } from "./rfi.repository";
