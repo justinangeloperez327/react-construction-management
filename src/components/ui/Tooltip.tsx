@@ -1,2 +1,1 @@
-import type { PropsWithChildren } from "react";
-export function Tooltip({content,children}:PropsWithChildren<{content:string}>){return <span className="tooltip" data-tooltip={content}>{children}</span>}
+import { useId,type PropsWithChildren } from "react";export function Tooltip({content,children}:PropsWithChildren<{content:string}>){const id=useId();return <span className="tooltip" data-tooltip={content} aria-describedby={id}>{children}<span id={id} role="tooltip" className="visually-hidden">{content}</span></span>}
