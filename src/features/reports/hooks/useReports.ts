@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { reportRepository } from "@/features/reports/api";import type { ProjectReportInput } from "@/features/reports/types/report";const key=(projectId:string)=>["projects",projectId,"reports"] as const;export function useReports(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>reportRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateReport(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:ProjectReportInput)=>reportRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteReport(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>reportRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { reportRepository } from "@/features/reports/api";
+import type { ProjectReportInput } from "@/features/reports/types/report";
+
+const key=(projectId:string)=>["projects",projectId,"reports"] as const;
+
+export function useReports(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>reportRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateReport(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:ProjectReportInput)=>reportRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateReport(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:ProjectReportInput})=>reportRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteReport(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>reportRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
