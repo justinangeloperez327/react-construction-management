@@ -1,1 +1,1 @@
-import { MockActivityRepository } from "./activity.mock.repository";export const activityRepository=new MockActivityRepository();export type { ActivityRepository } from "./activity.repository";
+import { selectRepository } from "@/services/api";import { HttpActivityRepository } from "./activity.http.repository";import { MockActivityRepository } from "./activity.mock.repository";export const activityRepository=selectRepository(()=>new MockActivityRepository(),()=>new HttpActivityRepository());export type { ActivityRepository } from "./activity.repository";
