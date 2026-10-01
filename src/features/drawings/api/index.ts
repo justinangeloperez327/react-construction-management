@@ -1,1 +1,1 @@
-import { MockDrawingRepository } from "./drawing.mock.repository";export const drawingRepository=new MockDrawingRepository();export type { DrawingRepository } from "./drawing.repository";
+import { selectRepository } from "@/services/api";import { HttpDrawingRepository } from "./drawing.http.repository";import { MockDrawingRepository } from "./drawing.mock.repository";export const drawingRepository=selectRepository(()=>new MockDrawingRepository(),()=>new HttpDrawingRepository());export type { DrawingRepository } from "./drawing.repository";
