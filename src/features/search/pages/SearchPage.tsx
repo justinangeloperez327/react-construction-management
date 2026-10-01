@@ -1,1 +1,62 @@
-import { Filter,Search } from "lucide-react";import { useMemo,useState } from "react";import { useOutletContext,useSearchParams } from "react-router-dom";import { PageHeader } from "@/components/layout";import { ErrorState,Input,Select,Skeleton } from "@/components/ui";import type { Project } from "@/features/projects/types/project";import { SearchResultsTable } from "@/features/search/components/SearchResultsTable";import { useProjectSearch } from "@/features/search/hooks/useProjectSearch";export function SearchPage(){const {project}=useOutletContext<{project:Project}>();const query=useProjectSearch(project.id);const [params,setParams]=useSearchParams();const [text,setText]=useState(params.get("q")??"");const type=params.get("type")??"all",status=params.get("status")??"all";const filtered=useMemo(()=>query.results.filter(x=>(!text.trim()||x.searchText.includes(text.trim().toLowerCase()))&&(type==="all"||x.entityType===type)&&(status==="all"||x.status===status)),[query.results,text,type,status]);if(query.isLoading)return <div className="table-loading"><Skeleton/><Skeleton/><Skeleton/></div>;if(query.isError)return <ErrorState title="Unable to search project" description="One or more project registers could not be retrieved." onRetry={()=>void query.refetch()}/>;const set=(key:string,value:string)=>{const next=new URLSearchParams(params);if(value==="all")next.delete(key);else next.set(key,value);setParams(next,{replace:true})};const statuses=Array.from(new Set(query.results.map(x=>x.status).filter((x):x is string=>!!x))).sort();return <><PageHeader eyebrow={project.projectNumber} title="Search & Filters" description="Search operational project registers from one project-scoped workspace."/><section className="card"><div className="data-table-toolbar"><div style={{flex:1}}><Input value={text} onChange={e=>{const value=e.target.value;setText(value);const next=new URLSearchParams(params);if(value)next.set("q",value);else next.delete("q");setParams(next,{replace:true})}} placeholder="Search project records..." aria-label="Search project records"/></div><Select aria-label="Filter by record type" value={type} onChange={e=>set("type",e.target.value)}><option value="all">All record types</option>{["wbs","activity","manpower","equipment","material","procurement","subcontractor","variation","cost","document","drawing","rfi","inspection","quality","safety","issue","report","user","attachment"].map(x=><option key={x} value={x}>{x}</option>)}</Select><Select aria-label="Filter by status" value={status} onChange={e=>set("status",e.target.value)}><option value="all">All statuses</option>{statuses.map(x=><option key={x} value={x}>{x}</option>)}</Select></div><p className="muted"><Search size={14}/> {filtered.length} matching records · <Filter size={14}/> Filters are preserved in the URL for shareable project views.</p><SearchResultsTable items={filtered} projectId={project.id}/></section></>}
+import { Filter,Search } from "lucide-react";
+import { useMemo } from "react";
+import { useOutletContext,useSearchParams } from "react-router-dom";
+import { PageHeader } from "@/components/layout";
+import { ErrorState,Input,Select,Skeleton } from "@/components/ui";
+import type { Project } from "@/features/projects/types/project";
+import { SearchResultsTable } from "@/features/search/components/SearchResultsTable";
+import { useProjectSearch } from "@/features/search/hooks/useProjectSearch";
+
+export function SearchPage(){
+  const {project}=useOutletContext<{project:Project}>();
+  const query=useProjectSearch(project.id);
+  const [params,setParams]=useSearchParams();
+
+  const text=params.get("q")??"";
+  const type=params.get("type")??"all";
+  const status=params.get("status")??"all";
+
+  const filtered=useMemo(
+    ()=>query.results.filter(x=>
+      (!text.trim()||x.searchText.includes(text.trim().toLowerCase()))&&
+      (type==="all"||x.entityType===type)&&
+      (status==="all"||x.status===status)
+    ),
+    [query.results,text,type,status]
+  );
+
+  if(query.isLoading)return <div className="table-loading"><Skeleton/><Skeleton/><Skeleton/></div>;
+  if(query.isError)return <ErrorState title="Unable to search project" description="One or more project registers could not be retrieved." onRetry={()=>void query.refetch()}/>;
+
+  const set=(key:string,value:string)=>{
+    setParams(previous=>{
+      const next=new URLSearchParams(previous);
+      if(!value||value==="all")next.delete(key);
+      else next.set(key,value);
+      return next;
+    },{replace:true});
+  };
+
+  const statuses=Array.from(new Set(query.results.map(x=>x.status).filter((x):x is string=>!!x))).sort();
+
+  return <>
+    <PageHeader eyebrow={project.projectNumber} title="Search & Filters" description="Search operational project registers from one project-scoped workspace."/>
+    <section className="card">
+      <div className="data-table-toolbar">
+        <div style={{flex:1}}>
+          <Input value={text} onChange={e=>set("q",e.target.value)} placeholder="Search project records..." aria-label="Search project records"/>
+        </div>
+        <Select aria-label="Filter by record type" value={type} onChange={e=>set("type",e.target.value)}>
+          <option value="all">All record types</option>
+          {["wbs","activity","manpower","equipment","material","procurement","subcontractor","variation","cost","document","drawing","rfi","inspection","quality","safety","issue","report","user","attachment"].map(x=><option key={x} value={x}>{x}</option>)}
+        </Select>
+        <Select aria-label="Filter by status" value={status} onChange={e=>set("status",e.target.value)}>
+          <option value="all">All statuses</option>
+          {statuses.map(x=><option key={x} value={x}>{x}</option>)}
+        </Select>
+      </div>
+      <p className="muted"><Search size={14}/> {filtered.length} matching records · <Filter size={14}/> Filters are preserved in the URL for shareable project views.</p>
+      <SearchResultsTable items={filtered} projectId={project.id}/>
+    </section>
+  </>;
+}
