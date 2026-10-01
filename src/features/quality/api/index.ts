@@ -1,1 +1,1 @@
-import { MockQualityRepository } from "./quality.mock.repository";export const qualityRepository=new MockQualityRepository();export type { QualityRepository } from "./quality.repository";
+import { selectRepository } from "@/services/api";import { HttpQualityRepository } from "./quality.http.repository";import { MockQualityRepository } from "./quality.mock.repository";export const qualityRepository=selectRepository(()=>new MockQualityRepository(),()=>new HttpQualityRepository());export type { QualityRepository } from "./quality.repository";
