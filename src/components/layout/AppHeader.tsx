@@ -4,7 +4,7 @@ import { useProject } from "@/features/projects/hooks/useProjects";
 import { CompanyThemeSelector } from "./CompanyThemeSelector";
 import { ThemeToggle } from "./ThemeToggle";
 
-const iconButton="inline-grid size-10 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100";
+const iconButton="brand-focus inline-grid size-10 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100";
 
 export function AppHeader({onMenu}:{onMenu:()=>void}){
   const {pathname}=useLocation();
@@ -22,7 +22,7 @@ export function AppHeader({onMenu}:{onMenu:()=>void}){
     </div>
     <div className="flex items-center gap-1">
       {projectId?<><Link className={iconButton} to={`/projects/${encodeURIComponent(projectId)}/search`} aria-label="Search project"><Search size={19}/></Link><Link className={iconButton+" relative"} to={`/projects/${encodeURIComponent(projectId)}/notifications`} aria-label="Project notifications"><Bell size={19}/></Link></>:<><button className={iconButton} type="button" disabled aria-label="Select a project to search"><Search size={19}/></button><button className={iconButton} type="button" disabled aria-label="Select a project to view notifications"><Bell size={19}/></button></>}
-      <CompanyThemeSelector/>
+      <CompanyThemeSelector className="hidden w-[170px] md:flex"/>
       <ThemeToggle/>
       <div className="ml-1 flex items-center gap-2 rounded-lg px-1.5 py-1">
         <span className="grid size-8 place-items-center rounded-full brand-soft text-xs font-bold">JP</span>

@@ -14,3 +14,15 @@ test("opens a project and navigates core workspace modules",async({page})=>{
   await expect(page).toHaveURL(/\/projects\/1\/rfis/);
   await expect(page.getByRole("heading",{name:/RFIs/i})).toBeVisible();
 });
+
+test("sidebar marks only the exact current route active",async({page},testInfo)=>{
+  test.skip(testInfo.project.name.includes("mobile"),"desktop navigation assertion");
+  await page.goto("/projects/1/rfis");
+
+  const sidebar=page.getByRole("complementary",{name:"Application sidebar"});
+  const projects=sidebar.getByRole("link",{name:"Projects",exact:true});
+  const rfis=sidebar.getByRole("link",{name:"RFIs",exact:true});
+
+  await expect(rfis).toHaveAttribute("aria-current","page");
+  await expect(projects).not.toHaveAttribute("aria-current","page");
+});
