@@ -3,3 +3,4 @@ export * from "./apiClient";
 export * from "./queryKeys";
 export * from "./queryString";
 export * from "./types";
+export * from "./repositoryFactory";
