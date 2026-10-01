@@ -128,3 +128,35 @@ body{background:linear-gradient(180deg,var(--color-background) 0,var(--color-bac
 .dark .brand-soft{background:color-mix(in srgb,var(--brand-primary) 28%,#0f172a);color:color-mix(in srgb,var(--brand-accent) 78%,white)}
 .dark .brand-tab-active{border-color:var(--brand-accent);color:color-mix(in srgb,var(--brand-accent) 78%,white)}
 .dark .brand-progress-fill{background:var(--brand-accent)}
+
+
+/* UX simplification pass */
+.metrics{
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin:14px 0 18px;
+}
+.card{
+  padding:16px;
+  box-shadow:none;
+}
+.page-header{
+  margin-bottom:18px;
+}
+.page-description{
+  max-width:68ch;
+}
+.dashboard-primary{
+  gap:14px;
+  margin-bottom:14px;
+}
+.sidebar-nav-group summary::-webkit-details-marker{display:none}
+.sidebar-nav-group summary{list-style:none}
+.sidebar-nav-group[open] summary{color:var(--color-text)}
+.dark .sidebar-nav-group[open] summary{color:#e2e8f0}
+@media(max-width:600px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:420px){
+  .metrics{grid-template-columns:1fr}
+}

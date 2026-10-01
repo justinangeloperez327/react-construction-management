@@ -1,28 +1,26 @@
 import { expect,test } from "@playwright/test";
 
-test("mobile project module selector remains usable",async({page},testInfo)=>{
+test("mobile sidebar exposes grouped project navigation",async({page},testInfo)=>{
   test.skip(!testInfo.project.name.includes("mobile"),"mobile-only journey");
   await page.goto("/projects/1/overview");
 
-  const trigger=page.getByRole("button",{name:"Project modules"});
-  await expect(trigger).toBeVisible();
-  await trigger.click();
+  await page.getByRole("button",{name:"Open navigation"}).click();
+  const drawer=page.getByRole("complementary",{name:"Mobile navigation"});
+  await expect(drawer).toBeVisible();
 
-  const workspace=page.getByRole("navigation",{name:"Project workspace"});
-  await workspace.getByRole("link",{name:"Daily Progress",exact:true}).click();
+  await drawer.locator("summary").filter({hasText:"Execution"}).click();
+  await drawer.getByRole("link",{name:"Daily Progress",exact:true}).click();
   await expect(page).toHaveURL(/\/projects\/1\/daily-progress/);
-  await expect(trigger).toBeVisible();
+  await expect(page.getByRole("complementary",{name:"Mobile navigation"})).toHaveCount(0);
 });
 
-test("mobile sidebar opens, navigates and closes cleanly",async({page},testInfo)=>{
+test("mobile sidebar closes cleanly after navigation and escape",async({page},testInfo)=>{
   test.skip(!testInfo.project.name.includes("mobile"),"mobile-only journey");
   await page.goto("/");
 
   await page.getByRole("button",{name:"Open navigation"}).click();
   const drawer=page.getByRole("complementary",{name:"Mobile navigation"});
   await expect(drawer).toBeVisible();
-  await expect(drawer.getByRole("link",{name:"Schedule",exact:true})).toBeVisible();
-  await expect(drawer.getByRole("link",{name:"RFIs",exact:true})).toBeVisible();
 
   await drawer.getByRole("link",{name:"Projects",exact:true}).click();
   await expect(page).toHaveURL(/\/projects$/);

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { BarChart3,Building2,CalendarDays,Camera,ClipboardCheck,FileQuestion,Files,HardHat,History,LayoutDashboard,Package,Search,ShieldCheck,ShoppingCart,Users,WalletCards,Wrench } from "lucide-react";
+import { BarChart3,Building2,CalendarDays,Camera,ClipboardCheck,FileQuestion,Files,HardHat,History,LayoutDashboard,Package,ShieldCheck,ShoppingCart,Users,WalletCards,Wrench } from "lucide-react";
 
 export type NavigationItem={label:string;to:string;icon:LucideIcon};
 export type NavigationGroup={label:string;items:NavigationItem[]};
@@ -8,7 +8,7 @@ const projectPath=(projectId:string,path:string)=>`/projects/${encodeURIComponen
 
 export function getNavigationGroups(projectId?:string):NavigationGroup[]{
   const groups:NavigationGroup[]=[
-    {label:"Overview",items:[
+    {label:"General",items:[
       {label:"Dashboard",to:"/",icon:LayoutDashboard},
       {label:"Projects",to:"/projects",icon:Building2}
     ]}
@@ -17,9 +17,8 @@ export function getNavigationGroups(projectId?:string):NavigationGroup[]{
   if(!projectId)return groups;
 
   groups.push(
-    {label:"Project",items:[
+    {label:"Execution",items:[
       {label:"Overview",to:projectPath(projectId,"overview"),icon:Building2},
-      {label:"Search",to:projectPath(projectId,"search"),icon:Search},
       {label:"WBS",to:projectPath(projectId,"wbs"),icon:ClipboardCheck},
       {label:"Schedule",to:projectPath(projectId,"schedule"),icon:CalendarDays},
       {label:"Activities",to:projectPath(projectId,"activities"),icon:ClipboardCheck},
@@ -37,12 +36,12 @@ export function getNavigationGroups(projectId?:string):NavigationGroup[]{
       {label:"Variations",to:projectPath(projectId,"variations"),icon:FileQuestion},
       {label:"Costs",to:projectPath(projectId,"costs"),icon:WalletCards}
     ]},
-    {label:"Document Control",items:[
+    {label:"Technical",items:[
       {label:"Documents",to:projectPath(projectId,"documents"),icon:Files},
       {label:"Drawings",to:projectPath(projectId,"drawings"),icon:Files},
       {label:"RFIs",to:projectPath(projectId,"rfis"),icon:FileQuestion}
     ]},
-    {label:"Quality & Safety",items:[
+    {label:"Quality & HSE",items:[
       {label:"Inspections",to:projectPath(projectId,"inspections"),icon:ClipboardCheck},
       {label:"Quality",to:projectPath(projectId,"quality"),icon:ShieldCheck},
       {label:"Safety",to:projectPath(projectId,"safety"),icon:HardHat}
@@ -50,8 +49,9 @@ export function getNavigationGroups(projectId?:string):NavigationGroup[]{
     {label:"Management",items:[
       {label:"Issues & Actions",to:projectPath(projectId,"issues"),icon:ClipboardCheck},
       {label:"Reports",to:projectPath(projectId,"reports"),icon:Files},
-      {label:"Analytics",to:projectPath(projectId,"analytics"),icon:BarChart3},
-      {label:"Notifications",to:projectPath(projectId,"notifications"),icon:FileQuestion},
+      {label:"Analytics",to:projectPath(projectId,"analytics"),icon:BarChart3}
+    ]},
+    {label:"Administration",items:[
       {label:"Audit Trail",to:projectPath(projectId,"audit"),icon:History},
       {label:"Users & Access",to:projectPath(projectId,"users"),icon:Users}
     ]}
