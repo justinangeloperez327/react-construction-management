@@ -1,3 +1,1 @@
-import { MockWbsRepository } from "./wbs.mock.repository";
-export const wbsRepository=new MockWbsRepository();
-export type { WbsRepository } from "./wbs.repository";
+import { selectRepository } from "@/services/api";import { HttpWbsRepository } from "./wbs.http.repository";import { MockWbsRepository } from "./wbs.mock.repository";export const wbsRepository=selectRepository(()=>new MockWbsRepository(),()=>new HttpWbsRepository());export type { WbsRepository } from "./wbs.repository";
