@@ -1,5 +1,1 @@
-import { RouterProvider } from "react-router-dom";
-import { AppProviders } from "@/app/providers";
-import { router } from "@/app/router";
-
-export function App() { return <AppProviders><RouterProvider router={router} /></AppProviders>; }
+import { RouterProvider } from "react-router-dom";import { AppProviders } from "@/app/providers";import { router } from "@/app/router";import { AppErrorBoundary } from "@/components/feedback/AppErrorBoundary";export function App(){return <AppErrorBoundary><AppProviders><RouterProvider router={router}/></AppProviders></AppErrorBoundary>}
