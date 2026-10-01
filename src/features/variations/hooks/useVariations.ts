@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { variationRepository } from "@/features/variations/api";import type { VariationInput } from "@/features/variations/types/variation";const key=(projectId:string)=>["projects",projectId,"variations"] as const;export function useVariations(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>variationRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateVariation(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:VariationInput)=>variationRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteVariation(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>variationRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { variationRepository } from "@/features/variations/api";
+import type { VariationInput } from "@/features/variations/types/variation";
+
+const key=(projectId:string)=>["projects",projectId,"variations"] as const;
+
+export function useVariations(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>variationRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateVariation(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:VariationInput)=>variationRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateVariation(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:VariationInput})=>variationRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteVariation(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>variationRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
