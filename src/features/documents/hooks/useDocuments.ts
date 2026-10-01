@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { documentRepository } from "@/features/documents/api";import type { ProjectDocumentInput } from "@/features/documents/types/document";const key=(projectId:string)=>["projects",projectId,"documents"] as const;export function useDocuments(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>documentRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateDocument(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:ProjectDocumentInput)=>documentRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteDocument(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>documentRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { documentRepository } from "@/features/documents/api";
+import type { ProjectDocumentInput } from "@/features/documents/types/document";
+
+const key=(projectId:string)=>["projects",projectId,"documents"] as const;
+
+export function useDocuments(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>documentRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateDocument(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:ProjectDocumentInput)=>documentRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateDocument(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:ProjectDocumentInput})=>documentRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteDocument(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>documentRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
