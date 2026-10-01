@@ -1,1 +1,1 @@
-import { MockSafetyRepository } from "./safety.mock.repository";export const safetyRepository=new MockSafetyRepository();export type { SafetyRepository } from "./safety.repository";
+import { selectRepository } from "@/services/api";import { HttpSafetyRepository } from "./safety.http.repository";import { MockSafetyRepository } from "./safety.mock.repository";export const safetyRepository=selectRepository(()=>new MockSafetyRepository(),()=>new HttpSafetyRepository());export type { SafetyRepository } from "./safety.repository";
