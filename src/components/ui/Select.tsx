@@ -1,2 +1,2 @@
 import { forwardRef,type SelectHTMLAttributes } from "react";
-export const Select=forwardRef<HTMLSelectElement,SelectHTMLAttributes<HTMLSelectElement>>(function Select({className="",...props},ref){return <select ref={ref} className={`select ${className}`.trim()} {...props}/>});
+export const Select=forwardRef<HTMLSelectElement,SelectHTMLAttributes<HTMLSelectElement>>(function Select({className="",...props},ref){return <select ref={ref} className={`min-h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/15 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 ${className}`.trim()} {...props}/>});
