@@ -1,0 +1,1 @@
+import type { AttachmentInput,ProjectAttachment } from "@/features/attachments/types/attachment";export interface AttachmentRepository{getByProject(projectId:string):Promise<ProjectAttachment[]>;create(input:AttachmentInput):Promise<ProjectAttachment>;delete(id:string):Promise<void>}
