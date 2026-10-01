@@ -29,12 +29,10 @@ export function SearchPage(){
   if(query.isError)return <ErrorState title="Unable to search project" description="One or more project registers could not be retrieved." onRetry={()=>void query.refetch()}/>;
 
   const set=(key:string,value:string)=>{
-    setParams(previous=>{
-      const next=new URLSearchParams(previous);
-      if(!value||value==="all")next.delete(key);
-      else next.set(key,value);
-      return next;
-    },{replace:true});
+    const next=new URLSearchParams(window.location.search);
+    if(!value||value==="all")next.delete(key);
+    else next.set(key,value);
+    setParams(next,{replace:true});
   };
 
   const statuses=Array.from(new Set(query.results.map(x=>x.status).filter((x):x is string=>!!x))).sort();
