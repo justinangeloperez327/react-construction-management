@@ -1,1 +1,1 @@
-import { MockVariationRepository } from "./variation.mock.repository";export const variationRepository=new MockVariationRepository();export type { VariationRepository } from "./variation.repository";
+import { selectRepository } from "@/services/api";import { HttpVariationRepository } from "./variation.http.repository";import { MockVariationRepository } from "./variation.mock.repository";export const variationRepository=selectRepository(()=>new MockVariationRepository(),()=>new HttpVariationRepository());export type { VariationRepository } from "./variation.repository";
