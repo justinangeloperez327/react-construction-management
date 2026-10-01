@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { procurementRepository } from "@/features/procurement/api";import type { ProcurementInput } from "@/features/procurement/types/procurement";const key=(projectId:string)=>["projects",projectId,"procurement"] as const;export function useProcurement(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>procurementRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateProcurement(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:ProcurementInput)=>procurementRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteProcurement(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>procurementRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { procurementRepository } from "@/features/procurement/api";
+import type { ProcurementInput } from "@/features/procurement/types/procurement";
+
+const key=(projectId:string)=>["projects",projectId,"procurement"] as const;
+
+export function useProcurement(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>procurementRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateProcurement(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:ProcurementInput)=>procurementRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateProcurement(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:ProcurementInput})=>procurementRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteProcurement(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>procurementRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
