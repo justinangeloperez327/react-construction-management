@@ -12,21 +12,21 @@ function key(pathname:string){if(pathname==="/")return"dashboard";if(pathname===
 export function PageShowcase(){
   const item=data[key(useLocation().pathname)];
   if(!item)return null;
-  return <section className="mb-6 grid overflow-hidden rounded-2xl border border-blue-800/70 bg-gradient-to-br from-[#0b2447] via-[#0f2f5e] to-[#0a1c36] text-white shadow-[0_14px_36px_rgba(15,42,82,.18)] xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)] dark:border-blue-900 dark:from-[#07182f] dark:via-[#0a2348] dark:to-[#050f1f]" aria-label="Demo design data">
+  return <section className="brand-showcase mb-6 grid overflow-hidden rounded-2xl border text-white shadow-[0_14px_36px_rgba(15,42,82,.18)] xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)]" aria-label="Demo design data">
     <div className="p-5 sm:p-6">
-      <div className="mb-2 inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[.08em] text-blue-200"><Sparkles size={14}/><span>Demo data</span></div>
-      <p className="mb-5 max-w-[78ch] text-sm leading-6 text-blue-100">{item.summary}</p>
-      <div className="grid gap-2.5 sm:grid-cols-3">{item.stats.map(([label,value,detail])=><div className="grid gap-1 rounded-xl border border-white/15 bg-white/[.07] p-3.5" key={label}><span className="text-[11px] uppercase tracking-[.04em] text-blue-200">{label}</span><strong className="text-xl leading-tight">{value}</strong><small className="text-[11px] text-blue-100">{detail}</small></div>)}</div>
+      <div className="mb-2 inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[.08em] text-white/75"><Sparkles size={14}/><span>Demo data</span></div>
+      <p className="mb-5 max-w-[78ch] text-sm leading-6 text-white/85">{item.summary}</p>
+      <div className="grid gap-2.5 sm:grid-cols-3">{item.stats.map(([label,value,detail])=><div className="grid gap-1 rounded-xl border border-white/15 bg-white/[.07] p-3.5" key={label}><span className="text-[11px] uppercase tracking-[.04em] text-white/75">{label}</span><strong className="text-xl leading-tight">{value}</strong><small className="text-[11px] text-white/85">{detail}</small></div>)}</div>
       <div className="mt-4">
-        <div className="flex items-center justify-between gap-3 text-xs"><span className="flex items-center gap-1.5 text-blue-100"><BarChart3 size={15}/>{item.progress[0]}</span><strong>{item.progress[1]}%</strong></div>
-        <div className="my-2 h-2 overflow-hidden rounded-full bg-white/15"><span className="block h-full rounded-full bg-blue-300" style={{width:item.progress[1]+"%"}}/></div>
-        <small className="text-blue-200">{item.progress[2]}</small>
+        <div className="flex items-center justify-between gap-3 text-xs"><span className="flex items-center gap-1.5 text-white/85"><BarChart3 size={15}/>{item.progress[0]}</span><strong>{item.progress[1]}%</strong></div>
+        <div className="my-2 h-2 overflow-hidden rounded-full bg-white/15"><span className="block h-full rounded-full brand-showcase-accent" style={{width:item.progress[1]+"%"}}/></div>
+        <small className="text-white/75">{item.progress[2]}</small>
       </div>
     </div>
     <aside className="border-t border-white/10 bg-slate-950/25 p-5 sm:p-6 xl:border-l xl:border-t-0">
-      <div className="mb-2 flex items-center gap-2 text-blue-100"><CircleDot size={15}/><strong className="text-sm">Current focus</strong></div>
+      <div className="mb-2 flex items-center gap-2 text-white/85"><CircleDot size={15}/><strong className="text-sm">Current focus</strong></div>
       {item.focus.map(([label,value,tone])=><div className="flex items-center justify-between gap-3 border-b border-white/10 py-2.5 text-[13px]" key={label}><span>{label}</span><StatusBadge tone={tone}>{value}</StatusBadge></div>)}
-      <p className="mt-3 text-[11px] leading-5 text-blue-200">Sample operational data is intentionally shown so the page design can be reviewed before backend integration.</p>
+      <p className="mt-3 text-[11px] leading-5 text-white/75">Sample operational data is intentionally shown so the page design can be reviewed before backend integration.</p>
     </aside>
   </section>;
 }
