@@ -1,0 +1,1 @@
+import { z } from "zod";const schema=z.object({VITE_API_BASE_URL:z.string().url().optional(),VITE_APP_ENV:z.enum(["development","staging","production"]).default("development")});const parsed=schema.safeParse(import.meta.env);if(!parsed.success)throw new Error("Invalid application environment configuration");export const env=parsed.data;
