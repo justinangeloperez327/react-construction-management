@@ -43,3 +43,6 @@ h1,h2,h3,p{margin-top:0}h2{font-size:18px;line-height:1.35}.page-header{display:
 
 /* Group 40: performance */
 .route-loading{display:grid;gap:12px;min-height:180px}.route-loading .skeleton:first-child{height:38px;width:min(420px,70%)}.route-loading .skeleton:nth-child(2){height:110px}.route-loading .skeleton:nth-child(3){height:220px}@media(prefers-reduced-data:reduce){.sidebar,.project-nav{transition:none!important}}
+
+/* Group 41: production hardening */
+.fatal-error{min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--color-background)}.fatal-error>.card{width:min(560px,100%);padding:28px}.fatal-error h1{font-size:28px}.fatal-error .page-actions{margin-top:20px}
