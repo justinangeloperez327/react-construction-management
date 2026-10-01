@@ -1,0 +1,1 @@
+import type { AuditEntry } from "@/features/audit/types/audit";export interface AuditRepository{getByProject(projectId:string):Promise<AuditEntry[]>;getByEntity(projectId:string,entityType:string,entityId:string):Promise<AuditEntry[]>}
