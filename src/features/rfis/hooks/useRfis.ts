@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { rfiRepository } from "@/features/rfis/api";import type { RfiInput } from "@/features/rfis/types/rfi";const key=(projectId:string)=>["projects",projectId,"rfis"] as const;export function useRfis(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>rfiRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateRfi(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:RfiInput)=>rfiRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteRfi(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>rfiRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { rfiRepository } from "@/features/rfis/api";
+import type { RfiInput } from "@/features/rfis/types/rfi";
+
+const key=(projectId:string)=>["projects",projectId,"rfis"] as const;
+
+export function useRfis(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>rfiRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateRfi(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:RfiInput)=>rfiRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateRfi(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:RfiInput})=>rfiRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteRfi(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>rfiRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
