@@ -21,6 +21,8 @@ test("mobile sidebar opens, navigates and closes cleanly",async({page},testInfo)
   await page.getByRole("button",{name:"Open navigation"}).click();
   const drawer=page.getByRole("complementary",{name:"Mobile navigation"});
   await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole("link",{name:"Schedule",exact:true})).toBeVisible();
+  await expect(drawer.getByRole("link",{name:"RFIs",exact:true})).toBeVisible();
 
   await drawer.getByRole("link",{name:"Projects",exact:true}).click();
   await expect(page).toHaveURL(/\/projects$/);

@@ -1,8 +1,16 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { X } from "lucide-react";
 import { NavLink,useLocation } from "react-router-dom";
 import { getNavigationGroups } from "@/app/navigation";
+import { useProjects } from "@/features/projects/hooks/useProjects";
 import { CompanyThemeSelector } from "./CompanyThemeSelector";
+
+const currentProjectKey="construction-management-current-project";
+
+function readStoredProjectId(){
+  if(typeof window==="undefined")return "";
+  return window.localStorage.getItem(currentProjectKey)??"";
+}
 
 function Navigation({projectId,onNavigate}:{projectId?:string;onNavigate?:()=>void}){
   const groups=getNavigationGroups(projectId);
@@ -32,8 +40,27 @@ function SidebarBrand({onClose}:{onClose?:()=>void}){
 
 export function Sidebar({open,onClose}:{open:boolean;onClose:()=>void}){
   const {pathname}=useLocation();
-  const match=pathname.match(/^\/projects\/([^/]+)/);
-  const projectId=match?.[1]?decodeURIComponent(match[1]):undefined;
+  const routeMatch=pathname.match(/^\/projects\/([^/]+)/);
+  const routeProjectId=routeMatch?.[1]?decodeURIComponent(routeMatch[1]):"";
+  const {data:projects=[]}=useProjects();
+  const [storedProjectId,setStoredProjectId]=useState(readStoredProjectId);
+
+  const storedProjectExists=projects.some(project=>project.id===storedProjectId);
+  const currentProjectId=routeProjectId||(storedProjectExists?storedProjectId:"")||projects[0]?.id;
+  const currentProject=projects.find(project=>project.id===currentProjectId);
+
+  useEffect(()=>{
+    if(!routeProjectId)return;
+    setStoredProjectId(routeProjectId);
+    window.localStorage.setItem(currentProjectKey,routeProjectId);
+  },[routeProjectId]);
+
+  useEffect(()=>{
+    if(routeProjectId||!projects.length||storedProjectExists)return;
+    const fallback=projects[0].id;
+    setStoredProjectId(fallback);
+    window.localStorage.setItem(currentProjectKey,fallback);
+  },[projects,routeProjectId,storedProjectExists]);
 
   useEffect(()=>{onClose()},[pathname,onClose]);
 
@@ -49,10 +76,17 @@ export function Sidebar({open,onClose}:{open:boolean;onClose:()=>void}){
     };
   },[open,onClose]);
 
+  const currentProjectCard=currentProject?<div className="mb-5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 dark:border-slate-800 dark:bg-slate-900">
+    <span className="block text-[10px] font-bold uppercase tracking-[.08em] text-slate-400">Current project</span>
+    <strong className="mt-1 block truncate text-sm">{currentProject.projectNumber}</strong>
+    <span className="mt-0.5 block truncate text-xs text-slate-500 dark:text-slate-400">{currentProject.name}</span>
+  </div>:null;
+
   return <>
     <aside className="sticky top-0 hidden h-screen overflow-y-auto border-r border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950 lg:block" aria-label="Application sidebar">
       <SidebarBrand/>
-      <Navigation projectId={projectId}/>
+      {currentProjectCard}
+      <Navigation projectId={currentProjectId}/>
     </aside>
 
     {open&&<div className="lg:hidden">
@@ -60,7 +94,8 @@ export function Sidebar({open,onClose}:{open:boolean;onClose:()=>void}){
       <aside className="fixed inset-y-0 left-0 z-50 w-[min(320px,88vw)] overflow-y-auto border-r border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-950" aria-label="Mobile navigation">
         <SidebarBrand onClose={onClose}/>
         <div className="mb-5 px-2"><CompanyThemeSelector className="w-full"/></div>
-        <Navigation projectId={projectId} onNavigate={onClose}/>
+        {currentProjectCard}
+        <Navigation projectId={currentProjectId} onNavigate={onClose}/>
       </aside>
     </div>}
   </>;

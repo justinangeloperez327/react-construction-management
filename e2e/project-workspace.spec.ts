@@ -26,3 +26,16 @@ test("sidebar marks only the exact current route active",async({page},testInfo)=
   await expect(rfis).toHaveAttribute("aria-current","page");
   await expect(projects).not.toHaveAttribute("aria-current","page");
 });
+
+test("sidebar keeps project modules visible from dashboard",async({page},testInfo)=>{
+  test.skip(testInfo.project.name.includes("mobile"),"desktop navigation assertion");
+  await page.goto("/");
+
+  const sidebar=page.getByRole("complementary",{name:"Application sidebar"});
+  await expect(sidebar.getByRole("link",{name:"Schedule",exact:true})).toBeVisible();
+  await expect(sidebar.getByRole("link",{name:"RFIs",exact:true})).toBeVisible();
+  await expect(sidebar.getByRole("link",{name:"Costs",exact:true})).toBeVisible();
+
+  await sidebar.getByRole("link",{name:"Schedule",exact:true}).click();
+  await expect(page).toHaveURL(/\/projects\/1\/schedule/);
+});
