@@ -1,1 +1,1 @@
-import { MockDocumentRepository } from "./document.mock.repository";export const documentRepository=new MockDocumentRepository();export type { DocumentRepository } from "./document.repository";
+import { selectRepository } from "@/services/api";import { HttpDocumentRepository } from "./document.http.repository";import { MockDocumentRepository } from "./document.mock.repository";export const documentRepository=selectRepository(()=>new MockDocumentRepository(),()=>new HttpDocumentRepository());export type { DocumentRepository } from "./document.repository";
