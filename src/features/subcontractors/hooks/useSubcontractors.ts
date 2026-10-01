@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { subcontractorRepository } from "@/features/subcontractors/api";import type { SubcontractorInput } from "@/features/subcontractors/types/subcontractor";const key=(projectId:string)=>["projects",projectId,"subcontractors"] as const;export function useSubcontractors(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>subcontractorRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateSubcontractor(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:SubcontractorInput)=>subcontractorRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteSubcontractor(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>subcontractorRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { subcontractorRepository } from "@/features/subcontractors/api";
+import type { SubcontractorInput } from "@/features/subcontractors/types/subcontractor";
+
+const key=(projectId:string)=>["projects",projectId,"subcontractors"] as const;
+
+export function useSubcontractors(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>subcontractorRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateSubcontractor(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:SubcontractorInput)=>subcontractorRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateSubcontractor(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:SubcontractorInput})=>subcontractorRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteSubcontractor(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>subcontractorRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
