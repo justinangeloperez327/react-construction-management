@@ -1,1 +1,1 @@
-import { MockEquipmentRepository } from "./equipment.mock.repository";export const equipmentRepository=new MockEquipmentRepository();export type { EquipmentRepository } from "./equipment.repository";
+import { selectRepository } from "@/services/api";import { HttpEquipmentRepository } from "./equipment.http.repository";import { MockEquipmentRepository } from "./equipment.mock.repository";export const equipmentRepository=selectRepository(()=>new MockEquipmentRepository(),()=>new HttpEquipmentRepository());export type { EquipmentRepository } from "./equipment.repository";
