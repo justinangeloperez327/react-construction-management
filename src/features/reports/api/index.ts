@@ -1,1 +1,1 @@
-import { MockReportRepository } from "./report.mock.repository";export const reportRepository=new MockReportRepository();export type { ReportRepository } from "./report.repository";
+import { selectRepository } from "@/services/api";import { HttpReportRepository } from "./report.http.repository";import { MockReportRepository } from "./report.mock.repository";export const reportRepository=selectRepository(()=>new MockReportRepository(),()=>new HttpReportRepository());export type { ReportRepository } from "./report.repository";
