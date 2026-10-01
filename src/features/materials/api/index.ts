@@ -1,1 +1,1 @@
-import { MockMaterialRepository } from "./material.mock.repository";export const materialRepository=new MockMaterialRepository();export type { MaterialRepository } from "./material.repository";
+import { selectRepository } from "@/services/api";import { HttpMaterialRepository } from "./material.http.repository";import { MockMaterialRepository } from "./material.mock.repository";export const materialRepository=selectRepository(()=>new MockMaterialRepository(),()=>new HttpMaterialRepository());export type { MaterialRepository } from "./material.repository";
