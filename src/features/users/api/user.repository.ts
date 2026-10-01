@@ -1,0 +1,1 @@
+import type { ProjectUser,ProjectUserInput } from "@/features/users/types/user";export interface UserRepository{getByProject(projectId:string):Promise<ProjectUser[]>;create(input:ProjectUserInput):Promise<ProjectUser>;update(id:string,input:ProjectUserInput):Promise<ProjectUser>;delete(id:string):Promise<void>}
