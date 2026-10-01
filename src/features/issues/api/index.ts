@@ -1,1 +1,1 @@
-import { MockIssueRepository } from "./issue.mock.repository";export const issueRepository=new MockIssueRepository();export type { IssueRepository } from "./issue.repository";
+import { selectRepository } from "@/services/api";import { HttpIssueRepository } from "./issue.http.repository";import { MockIssueRepository } from "./issue.mock.repository";export const issueRepository=selectRepository(()=>new MockIssueRepository(),()=>new HttpIssueRepository());export type { IssueRepository } from "./issue.repository";
