@@ -1,0 +1,1 @@
+import { MockAttachmentRepository } from "./attachment.mock.repository";export const attachmentRepository=new MockAttachmentRepository();export type { AttachmentRepository } from "./attachment.repository";
