@@ -7,4 +7,4 @@ const tones:Record<Tone,string>={
   warning:"border-amber-100 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/60 dark:text-amber-300",
   danger:"border-red-100 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/60 dark:text-red-300"
 };
-export function StatusBadge({tone="neutral",children}:PropsWithChildren<{tone?:Tone}>){return <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${tones[tone]}`}>{children}</span>}
+export function StatusBadge({tone="neutral",children}:PropsWithChildren<{tone?:Tone}>){return <span data-tone={tone} className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${tones[tone]}`}>{children}</span>}
