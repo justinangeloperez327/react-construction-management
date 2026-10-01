@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
 import { X } from "lucide-react";
 import { NavLink,useLocation } from "react-router-dom";
 import { getNavigationGroups } from "@/app/navigation";
@@ -43,23 +43,17 @@ export function Sidebar({open,onClose}:{open:boolean;onClose:()=>void}){
   const routeMatch=pathname.match(/^\/projects\/([^/]+)/);
   const routeProjectId=routeMatch?.[1]?decodeURIComponent(routeMatch[1]):"";
   const {data:projects=[]}=useProjects();
-  const [storedProjectId,setStoredProjectId]=useState(readStoredProjectId);
-
+  const storedProjectId=readStoredProjectId();
   const storedProjectExists=projects.some(project=>project.id===storedProjectId);
   const currentProjectId=routeProjectId||(storedProjectExists?storedProjectId:"")||projects[0]?.id;
   const currentProject=projects.find(project=>project.id===currentProjectId);
 
   useEffect(()=>{
-    if(!routeProjectId)return;
-    setStoredProjectId(routeProjectId);
-    window.localStorage.setItem(currentProjectKey,routeProjectId);
-  },[routeProjectId]);
-
-  useEffect(()=>{
-    if(routeProjectId||!projects.length||storedProjectExists)return;
-    const fallback=projects[0].id;
-    setStoredProjectId(fallback);
-    window.localStorage.setItem(currentProjectKey,fallback);
+    if(routeProjectId){
+      window.localStorage.setItem(currentProjectKey,routeProjectId);
+      return;
+    }
+    if(!storedProjectExists&&projects[0]?.id)window.localStorage.setItem(currentProjectKey,projects[0].id);
   },[projects,routeProjectId,storedProjectExists]);
 
   useEffect(()=>{onClose()},[pathname,onClose]);
