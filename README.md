@@ -1,14 +1,23 @@
 # React Construction Management
 
-Enterprise construction project management frontend built with React and TypeScript.
+Enterprise construction project management frontend built with React, TypeScript, and Vite.
 
 ## Architecture
 
-The application uses a feature-oriented frontend architecture with a repository boundary between UI/server-state logic and data sources.
+The application uses feature-oriented modules with repository interfaces separating UI/server-state logic from transport and persistence.
 
-During frontend development, feature repositories use mock data. When the REST backend is available, HTTP repository implementations replace the mock implementations without coupling pages to transport details.
+```text
+React page
+  → feature hook
+  → TanStack Query
+  → repository interface
+  → mock repository | HTTP repository
+  → REST API
+```
 
-## Planned stack
+Mock repositories remain useful for local demonstrations. Production integrations can enable the HTTP repositories without changing pages or feature hooks.
+
+## Stack
 
 - React
 - TypeScript
@@ -18,8 +27,6 @@ During frontend development, feature repositories use mock data. When the REST b
 - TanStack Table
 - React Hook Form
 - Zod
-- Tailwind CSS
-- shadcn/ui
 - Lucide React
 - Recharts
 - date-fns
@@ -27,37 +34,61 @@ During frontend development, feature repositories use mock data. When the REST b
 - React Testing Library
 - Playwright
 
-## Development principles
+## Development
 
-- TypeScript strict mode
-- Feature-oriented modules
-- API-ready repository interfaces
-- Accessible reusable UI components
-- Responsive desktop/tablet/mobile layouts
-- Consistent construction-domain status semantics
-- Tables for operational data and dashboards for summaries/exceptions
-- Mock data never imported directly by pages
-- Backend authorization remains authoritative when API integration is introduced
+Use Node.js 22.
 
-## Planned phases
+```bash
+npm install
+npm run dev
+```
 
-1. Project foundation
-2. Design system
-3. Application shell
-4. Core UI components
-5. Data tables and forms
-6. API/mock architecture
-7. Shared construction domain
-8. Projects and project workspace
-9. Dashboard
-10. Planning, activities, schedule, and daily progress
-11. Resources
-12. Procurement and commercial
-13. Document control
-14. Quality and safety
-15. Reporting and analytics
-16. Enterprise features
-17. Field/mobile experience
-18. Testing and accessibility
-19. Performance and production hardening
-20. REST API integration
+Quality commands:
+
+```bash
+npm run lint
+npm test
+npm run build
+npm run test:e2e
+```
+
+## Data providers
+
+Mock data is the default:
+
+```env
+VITE_DATA_PROVIDER=mock
+VITE_API_BASE_URL=/api/v1
+VITE_APP_ENV=development
+```
+
+To use a REST backend:
+
+```env
+VITE_DATA_PROVIDER=http
+VITE_API_BASE_URL=/api/v1
+VITE_APP_ENV=production
+```
+
+The backend remains authoritative for authentication, authorization, validation, audit integrity, and persistence.
+
+## Functional coverage
+
+The project workspace includes planning and WBS, activities and schedule, daily progress, manpower, equipment, materials, procurement, subcontractors, variations, cost control, documents, drawings, RFIs, inspections, quality, safety, issues and actions, reports, analytics, search, notifications, audit trail, project users, and site attachments.
+
+## Quality and release
+
+The repository includes:
+
+- strict TypeScript configuration
+- linting
+- unit/component tests
+- Playwright desktop and mobile journeys
+- accessible shared interaction primitives
+- route-level lazy loading
+- application error recovery
+- validated runtime environment configuration
+- mock/HTTP repository switching
+- GitHub Actions release verification
+
+CI gates linting, unit tests, production build, and Playwright before a change is considered release-ready.
