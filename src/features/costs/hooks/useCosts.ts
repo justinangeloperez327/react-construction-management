@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { costRepository } from "@/features/costs/api";import type { CostInput } from "@/features/costs/types/cost";const key=(projectId:string)=>["projects",projectId,"costs"] as const;export function useCosts(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>costRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateCost(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:CostInput)=>costRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteCost(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>costRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { costRepository } from "@/features/costs/api";
+import type { CostInput } from "@/features/costs/types/cost";
+
+const key=(projectId:string)=>["projects",projectId,"costs"] as const;
+
+export function useCosts(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>costRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateCost(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:CostInput)=>costRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateCost(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:CostInput})=>costRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteCost(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>costRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
