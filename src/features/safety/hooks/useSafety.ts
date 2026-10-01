@@ -1,1 +1,24 @@
-import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";import { safetyRepository } from "@/features/safety/api";import type { SafetyRecordInput } from "@/features/safety/types/safety";const key=(projectId:string)=>["projects",projectId,"safety"] as const;export function useSafety(projectId:string){return useQuery({queryKey:key(projectId),queryFn:()=>safetyRepository.getByProject(projectId),enabled:!!projectId})}export function useCreateSafetyRecord(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(input:SafetyRecordInput)=>safetyRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}export function useDeleteSafetyRecord(projectId:string){const client=useQueryClient();return useMutation({mutationFn:(id:string)=>safetyRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})})}
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
+import { safetyRepository } from "@/features/safety/api";
+import type { SafetyRecordInput } from "@/features/safety/types/safety";
+
+const key=(projectId:string)=>["projects",projectId,"safety"] as const;
+
+export function useSafety(projectId:string){
+  return useQuery({queryKey:key(projectId),queryFn:()=>safetyRepository.getByProject(projectId),enabled:!!projectId});
+}
+
+export function useCreateSafetyRecord(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(input:SafetyRecordInput)=>safetyRepository.create(input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useUpdateSafetyRecord(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:({id,input}:{id:string;input:SafetyRecordInput})=>safetyRepository.update(id,input),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
+
+export function useDeleteSafetyRecord(projectId:string){
+  const client=useQueryClient();
+  return useMutation({mutationFn:(id:string)=>safetyRepository.delete(id),onSuccess:async()=>client.invalidateQueries({queryKey:key(projectId)})});
+}
