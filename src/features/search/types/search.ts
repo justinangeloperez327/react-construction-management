@@ -1,1 +1,2 @@
-export type SearchEntityType="activity"|"document"|"drawing"|"rfi"|"inspection"|"quality"|"safety"|"issue";export interface ProjectSearchResult{id:string;entityType:SearchEntityType;reference:string;title:string;description:string;status?:string;discipline?:string;owner?:string;date?:string;path:string;searchText:string}
+export type SearchEntityType="wbs"|"activity"|"manpower"|"equipment"|"material"|"procurement"|"subcontractor"|"variation"|"cost"|"document"|"drawing"|"rfi"|"inspection"|"quality"|"safety"|"issue"|"report"|"user"|"attachment";
+export interface ProjectSearchResult{id:string;entityType:SearchEntityType;reference:string;title:string;description:string;status?:string;discipline?:string;owner?:string;date?:string;path:string;searchText:string}
