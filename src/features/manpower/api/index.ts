@@ -1,1 +1,1 @@
-import { MockManpowerRepository } from "./manpower.mock.repository";export const manpowerRepository=new MockManpowerRepository();export type { ManpowerRepository } from "./manpower.repository";
+import { selectRepository } from "@/services/api";import { HttpManpowerRepository } from "./manpower.http.repository";import { MockManpowerRepository } from "./manpower.mock.repository";export const manpowerRepository=selectRepository(()=>new MockManpowerRepository(),()=>new HttpManpowerRepository());export type { ManpowerRepository } from "./manpower.repository";
