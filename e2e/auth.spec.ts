@@ -16,7 +16,7 @@ test("account dropdown opens profile and supports sign out and sign in",async({p
 
   await page.getByLabel("Password").fill("demo123");
   await page.getByRole("button",{name:"Sign in",exact:true}).click();
-  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveURL(/\/profile$/);
 });
 
 test("signed-out users are redirected to login",async({page})=>{
