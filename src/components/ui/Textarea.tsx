@@ -1,2 +1,3 @@
 import { forwardRef,type TextareaHTMLAttributes } from "react";
-export const Textarea=forwardRef<HTMLTextAreaElement,TextareaHTMLAttributes<HTMLTextAreaElement>>(function Textarea({className="",...props},ref){return <textarea ref={ref} className={`min-h-24 w-full resize-y rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] shadow-sm transition placeholder:text-[var(--color-text-muted)] hover:border-[var(--color-text-muted)] focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--focus-ring)_15%,transparent)] ${className}`.trim()} {...props}/>});
+import { ShadcnTextarea } from "@/components/shadcn/textarea";
+export const Textarea=forwardRef<HTMLTextAreaElement,TextareaHTMLAttributes<HTMLTextAreaElement>>(function Textarea(props,ref){return <ShadcnTextarea ref={ref} {...props}/>});

@@ -24,7 +24,11 @@
     "react-hook-form": "7.89.0",
     "react-router-dom": "7.18.4",
     "recharts": "3.10.1",
-    "zod": "3.25.76"
+    "zod": "3.25.76",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "radix-ui": "1.6.7",
+    "tailwind-merge": "3.7.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

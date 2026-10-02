@@ -1,3 +1,4 @@
 import { forwardRef,type InputHTMLAttributes } from "react";
+import { ShadcnInput } from "@/components/shadcn/input";
 export type InputProps=InputHTMLAttributes<HTMLInputElement>&{invalid?:boolean};
-export const Input=forwardRef<HTMLInputElement,InputProps>(function Input({className="",invalid=false,...props},ref){return <input ref={ref} aria-invalid={invalid||undefined} className={`min-h-10 w-full rounded-lg border bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] shadow-sm transition placeholder:text-[var(--color-text-muted)] hover:border-[var(--color-text-muted)] focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--focus-ring)_15%,transparent)] ${invalid?"border-red-600 dark:border-red-500":"border-[var(--color-border)]"} ${className}`.trim()} {...props}/>});
+export const Input=forwardRef<HTMLInputElement,InputProps>(function Input({invalid=false,...props},ref){return <ShadcnInput ref={ref} aria-invalid={invalid||undefined} {...props}/>});
