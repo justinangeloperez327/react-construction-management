@@ -1,2 +1,32 @@
-import type { Activity } from "@/features/activities/types/activity";import type { WbsItem } from "@/features/wbs/types/wbs";import { Progress,StatusBadge } from "@/components/ui";import { getStatusTone } from "@/design/status";import { activityDuration,isLate } from "@/features/schedule/utils/schedule";import { humanize } from "@/shared/utils";
-export function ScheduleTable({activities,wbsItems}:{activities:Activity[];wbsItems:WbsItem[]}){return <div className="table-scroll"><table className="table schedule-table"><thead><tr><th>Activity</th><th>WBS</th><th>Start</th><th>Finish</th><th>Duration</th><th>Status</th><th>Progress</th></tr></thead><tbody>{[...activities].sort((a,b)=>a.plannedStart.localeCompare(b.plannedStart)).map(a=>{const w=wbsItems.find(x=>x.id===a.wbsId);const late=isLate(a);return <tr key={a.id} className={late?"schedule-row--late":undefined}><td><strong>{a.activityNumber}</strong><div className="muted">{a.name}</div>{late&&<small className="schedule-late">Past planned finish</small>}</td><td>{w?`${w.code} · ${w.name}`:"—"}</td><td>{a.plannedStart}</td><td>{a.plannedFinish}</td><td>{activityDuration(a)} days</td><td><StatusBadge tone={late?"danger":getStatusTone(a.status)}>{late?"Late":humanize(a.status)}</StatusBadge></td><td><div className="table-progress"><Progress value={a.progress} label=""/></div></td></tr>})}</tbody></table></div>}
+import type { Activity } from "@/features/activities/types/activity";
+import type { WbsItem } from "@/features/wbs/types/wbs";
+import { Progress,StatusBadge } from "@/components/ui";
+import { ShadcnTable,ShadcnTableBody,ShadcnTableCell,ShadcnTableHead,ShadcnTableHeader,ShadcnTableRow } from "@/components/shadcn/table";
+import { getStatusTone } from "@/design/status";
+import { activityDuration,isLate } from "@/features/schedule/utils/schedule";
+import { humanize } from "@/shared/utils";
+
+export function ScheduleTable({activities,wbsItems}:{activities:Activity[];wbsItems:WbsItem[]}){
+  return <ShadcnTable className="min-w-[900px]">
+    <ShadcnTableHeader><ShadcnTableRow><ShadcnTableHead>Activity</ShadcnTableHead><ShadcnTableHead>WBS</ShadcnTableHead><ShadcnTableHead>Start</ShadcnTableHead><ShadcnTableHead>Finish</ShadcnTableHead><ShadcnTableHead>Duration</ShadcnTableHead><ShadcnTableHead>Status</ShadcnTableHead><ShadcnTableHead>Progress</ShadcnTableHead></ShadcnTableRow></ShadcnTableHeader>
+    <ShadcnTableBody>
+      {[...activities].sort((a,b)=>a.plannedStart.localeCompare(b.plannedStart)).map(activity=>{
+        const wbs=wbsItems.find(item=>item.id===activity.wbsId);
+        const late=isLate(activity);
+        return <ShadcnTableRow key={activity.id}>
+          <ShadcnTableCell>
+            <strong>{activity.activityNumber}</strong>
+            <div className="text-xs text-muted-foreground">{activity.name}</div>
+            {late&&<div className="text-xs text-destructive">Past planned finish</div>}
+          </ShadcnTableCell>
+          <ShadcnTableCell>{wbs?wbs.code+" · "+wbs.name:"—"}</ShadcnTableCell>
+          <ShadcnTableCell>{activity.plannedStart}</ShadcnTableCell>
+          <ShadcnTableCell>{activity.plannedFinish}</ShadcnTableCell>
+          <ShadcnTableCell>{activityDuration(activity)} days</ShadcnTableCell>
+          <ShadcnTableCell><StatusBadge tone={late?"danger":getStatusTone(activity.status)}>{late?"Late":humanize(activity.status)}</StatusBadge></ShadcnTableCell>
+          <ShadcnTableCell className="min-w-40"><Progress value={activity.progress} label=""/></ShadcnTableCell>
+        </ShadcnTableRow>;
+      })}
+    </ShadcnTableBody>
+  </ShadcnTable>;
+}
