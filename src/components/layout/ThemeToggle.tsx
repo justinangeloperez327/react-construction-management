@@ -12,7 +12,7 @@ function initialTheme():Theme{
   return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
 }
 
-export function ThemeToggle({compact=false}:{compact?:boolean}){
+export function ThemeToggle(){
   const [theme,setTheme]=useState<Theme>(initialTheme);
 
   useEffect(()=>{
@@ -27,7 +27,7 @@ export function ThemeToggle({compact=false}:{compact?:boolean}){
   return <ShadcnButton
     type="button"
     variant="ghost"
-    size={compact?"sm":"icon"}
+    size="icon"
     onClick={()=>setTheme(dark?"light":"dark")}
     aria-label={dark?"Use light mode":"Use dark mode"}
     title={dark?"Use light mode":"Use dark mode"}
