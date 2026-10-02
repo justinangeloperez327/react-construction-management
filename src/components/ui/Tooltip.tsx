@@ -1,2 +1,9 @@
 import { useId,type PropsWithChildren } from "react";
-export function Tooltip({content,children}:PropsWithChildren<{content:string}>){const id=useId();return <span className="group relative inline-flex" aria-describedby={id}>{children}<span id={id} role="tooltip" className="pointer-events-none absolute bottom-[calc(100%+7px)] left-1/2 z-90 -translate-x-1/2 rounded-md bg-slate-950 px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{content}</span></span>}
+
+export function Tooltip({content,children}:PropsWithChildren<{content:string}>){
+  const id=useId();
+  return <span className="group relative inline-flex" aria-describedby={id}>
+    {children}
+    <span id={id} role="tooltip" className="pointer-events-none absolute bottom-[calc(100%+7px)] left-1/2 z-50 -translate-x-1/2 rounded-md bg-primary px-2 py-1 text-xs whitespace-nowrap text-primary-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{content}</span>
+  </span>;
+}
