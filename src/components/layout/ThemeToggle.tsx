@@ -1,5 +1,6 @@
 import { Moon,Sun } from "lucide-react";
 import { useEffect,useState } from "react";
+import { ShadcnButton } from "@/components/shadcn/button";
 
 type Theme="light"|"dark";
 const storageKey="construction-management-theme";
@@ -11,20 +12,26 @@ function initialTheme():Theme{
   return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
 }
 
-export function ThemeToggle(){
+export function ThemeToggle({compact=false}:{compact?:boolean}){
   const [theme,setTheme]=useState<Theme>(initialTheme);
+
   useEffect(()=>{
     const root=document.documentElement;
     root.classList.toggle("dark",theme==="dark");
     root.style.colorScheme=theme;
     window.localStorage.setItem(storageKey,theme);
   },[theme]);
+
   const dark=theme==="dark";
-  return <button
+
+  return <ShadcnButton
     type="button"
+    variant="ghost"
+    size={compact?"sm":"icon"}
     onClick={()=>setTheme(dark?"light":"dark")}
-    className="inline-grid size-10 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 app-focus dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
     aria-label={dark?"Use light mode":"Use dark mode"}
     title={dark?"Use light mode":"Use dark mode"}
-  >{dark?<Sun size={18}/>:<Moon size={18}/>}</button>;
+  >
+    {dark?<Sun className="size-4"/>:<Moon className="size-4"/>}
+  </ShadcnButton>;
 }
