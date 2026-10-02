@@ -6,9 +6,6 @@
     <meta name="color-scheme" content="light dark" />
     <script>
       try {
-        const companyThemes=["al-geemi","trojan","kad","al-sahel","target","alec","saif-bin-darwish","western-bainoona","sobha","general-construction"];
-        const savedCompany=localStorage.getItem("construction-management-company-theme");
-        document.documentElement.dataset.companyTheme=companyThemes.includes(savedCompany) ? savedCompany : "al-geemi";
         const saved=localStorage.getItem("construction-management-theme");
         const dark=saved==="dark"||(saved!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);
         document.documentElement.classList.toggle("dark",dark);
