@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link,NavLink,useLocation } from "react-router-dom";
 import { getNavigationGroups,type NavigationGroup } from "@/app/navigation";
@@ -25,14 +25,11 @@ function NavItem({label,to,icon:Icon,onNavigate}:{label:string;to:string;icon:Na
 
 function NavigationGroupSection({group,pathname,onNavigate}:{group:NavigationGroup;pathname:string;onNavigate?:()=>void}){
   const active=group.items.some(item=>item.to===pathname);
-  const [open,setOpen]=useState(active);
 
-  useEffect(()=>{if(active)setOpen(true)},[active]);
-
-  return <ShadcnCollapsible open={open} onOpenChange={setOpen}>
+  return <ShadcnCollapsible defaultOpen={active}>
     <ShadcnCollapsibleTrigger className="flex h-8 w-full items-center justify-between rounded-md px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
       <span>{group.label}</span>
-      <ChevronDown className={cn("size-3.5 transition-transform",open&&"rotate-180")}/>
+      <ChevronDown className="size-3.5 transition-transform data-[state=open]:rotate-180"/>
     </ShadcnCollapsibleTrigger>
     <ShadcnCollapsibleContent className="mt-1 grid gap-1 pl-2">
       {group.items.map(item=><NavItem key={item.to} {...item} onNavigate={onNavigate}/>)}
@@ -50,7 +47,7 @@ function Navigation({projectId,onNavigate}:{projectId?:string;onNavigate?:()=>vo
     {projectGroups.length>0&&<>
       <ShadcnSeparator/>
       <div className="grid gap-1">
-        {projectGroups.map(group=><NavigationGroupSection key={group.label} group={group} pathname={pathname} onNavigate={onNavigate}/>)}
+        {projectGroups.map(group=><NavigationGroupSection key={`${group.label}:${pathname}`} group={group} pathname={pathname} onNavigate={onNavigate}/>)}
       </div>
     </>}
   </nav>;

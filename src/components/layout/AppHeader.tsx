@@ -1,6 +1,6 @@
 import { Bell,Menu,Search } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ShadcnButton } from "@/components/shadcn/button";
+import { ShadcnButton,buttonVariants } from "@/components/shadcn/button";
 import { useCurrentProject } from "@/features/projects/hooks/useCurrentProject";
 import { AccountMenu } from "./AccountMenu";
 import { AppearanceMenu } from "./AppearanceMenu";
@@ -19,8 +19,8 @@ export function AppHeader({onMenu}:{onMenu:()=>void}){
       </Link>
     </div>
     <div className="flex items-center gap-1">
-      {projectId&&<ShadcnButton variant="ghost" size="icon" aria-label="Search project" onClick={()=>{window.location.href=projectBase+"/search"}}><Search className="size-4"/></ShadcnButton>}
-      {projectId&&<ShadcnButton variant="ghost" size="icon" aria-label="Project notifications" onClick={()=>{window.location.href=projectBase+"/notifications"}}><Bell className="size-4"/></ShadcnButton>}
+      {projectId&&<Link className={buttonVariants({variant:"ghost",size:"icon"})} to={projectBase+"/search"} aria-label="Search project"><Search className="size-4"/></Link>}
+      {projectId&&<Link className={buttonVariants({variant:"ghost",size:"icon"})} to={projectBase+"/notifications"} aria-label="Project notifications"><Bell className="size-4"/></Link>}
       <AppearanceMenu/>
       <AccountMenu/>
     </div>
