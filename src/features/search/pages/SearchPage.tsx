@@ -25,7 +25,7 @@ export function SearchPage(){
     [query.results,text,type,status]
   );
 
-  if(query.isLoading)return <div className="table-loading"><Skeleton/><Skeleton/><Skeleton/></div>;
+  if(query.isLoading)return <div className="grid gap-2 [&>*]:h-10"><Skeleton/><Skeleton/><Skeleton/></div>;
   if(query.isError)return <ErrorState title="Unable to search project" description="One or more project registers could not be retrieved." onRetry={()=>void query.refetch()}/>;
 
   const set=(key:string,value:string)=>{
@@ -39,7 +39,7 @@ export function SearchPage(){
 
   return <>
     <PageHeader eyebrow={project.projectNumber} title="Search & Filters" description="Search operational project registers from one project-scoped workspace."/>
-    <section className="card">
+    <section className="rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
       <div className="data-table-toolbar">
         <div style={{flex:1}}>
           <Input value={text} onChange={e=>set("q",e.target.value)} placeholder="Search project records..." aria-label="Search project records"/>
@@ -53,7 +53,7 @@ export function SearchPage(){
           {statuses.map(x=><option key={x} value={x}>{x}</option>)}
         </Select>
       </div>
-      <p className="muted"><Search size={14}/> {filtered.length} matching records · <Filter size={14}/> Filters are preserved in the URL for shareable project views.</p>
+      <p className="text-sm text-muted-foreground"><Search size={14}/> {filtered.length} matching records · <Filter size={14}/> Filters are preserved in the URL for shareable project views.</p>
       <SearchResultsTable items={filtered} projectId={project.id}/>
     </section>
   </>;
