@@ -8,4 +8,22 @@ import { ScheduleSummary } from "@/features/schedule/components/ScheduleSummary"
 import { ScheduleTable } from "@/features/schedule/components/ScheduleTable";
 import { ScheduleTimeline } from "@/features/schedule/components/ScheduleTimeline";
 
-export function SchedulePage(){const {project}=useOutletContext<{project:Project}>();const activities=useActivities(project.id);const wbs=useWbs(project.id);if(activities.isLoading||wbs.isLoading)return <div className="table-loading"><Skeleton/><Skeleton/><Skeleton/></div>;if(activities.isError||wbs.isError)return <ErrorState title="Unable to load schedule" description="Schedule activities or WBS scope could not be retrieved." onRetry={()=>{void activities.refetch();void wbs.refetch()}}/>;const data=activities.data??[];return <><PageHeader eyebrow={project.projectNumber} title="Schedule" description="Review planned activity dates, durations, progress and schedule exceptions."/><ScheduleSummary activities={data}/><Card><CardHeader title="Schedule timeline" description="Planned activity windows with current progress."/><CardContent><ScheduleTimeline activities={data}/></CardContent></Card><Card><CardHeader title="Activity schedule" description="The schedule uses the same activities defined in project execution; it does not maintain a duplicate activity register."/><CardContent><ScheduleTable activities={data} wbsItems={wbs.data??[]}/></CardContent></Card></>}
+export function SchedulePage(){
+  const {project}=useOutletContext<{project:Project}>();
+  const activities=useActivities(project.id);
+  const wbs=useWbs(project.id);
+
+  if(activities.isLoading||wbs.isLoading)return <div className="grid gap-2"><Skeleton/><Skeleton/><Skeleton/></div>;
+  if(activities.isError||wbs.isError)return <ErrorState title="Unable to load schedule" description="Schedule data could not be retrieved." onRetry={()=>{void activities.refetch();void wbs.refetch()}}/>;
+
+  const data=activities.data??[];
+
+  return <>
+    <PageHeader eyebrow={project.projectNumber} title="Schedule"/>
+    <ScheduleSummary activities={data}/>
+    <div className="mt-4 grid gap-4">
+      <Card><CardHeader title="Timeline"/><CardContent><ScheduleTimeline activities={data}/></CardContent></Card>
+      <Card><CardHeader title="Activities"/><CardContent><ScheduleTable activities={data} wbsItems={wbs.data??[]}/></CardContent></Card>
+    </div>
+  </>;
+}

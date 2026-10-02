@@ -1,4 +1,4 @@
-import { AlertTriangle,ClipboardList,PackageCheck,Plus,ShoppingCart } from "lucide-react";
+import { AlertTriangle,PackageCheck,Plus,ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { PageHeader } from "@/components/layout";
@@ -10,14 +10,36 @@ import { ProcurementTable } from "@/features/procurement/components/ProcurementT
 import { useCreateProcurement,useDeleteProcurement,useProcurement,useUpdateProcurement } from "@/features/procurement/hooks/useProcurement";
 import type { ProcurementItem } from "@/features/procurement/types/procurement";
 
+const compact=(value:number)=>new Intl.NumberFormat("en-AE",{notation:"compact",maximumFractionDigits:1}).format(value);
+
 export function ProcurementPage(){
   const {project}=useOutletContext<{project:Project}>();
   const query=useProcurement(project.id),materials=useMaterials(project.id);
   const create=useCreateProcurement(project.id),update=useUpdateProcurement(project.id),remove=useDeleteProcurement(project.id);
   const [adding,setAdding]=useState(false),[editing,setEditing]=useState<ProcurementItem>(),[deleting,setDeleting]=useState<string>();
-  if(query.isLoading||materials.isLoading)return <div className="table-loading"><Skeleton/><Skeleton/><Skeleton/></div>;
-  if(query.isError||materials.isError)return <ErrorState title="Unable to load procurement" description="Procurement or material records could not be retrieved." onRetry={()=>{void query.refetch();void materials.refetch()}}/>;
-  const data=query.data??[],exposure=data.filter(x=>!["delivered","cancelled"].includes(x.status)).reduce((s,x)=>s+x.estimatedValue,0);
 
-  return <><PageHeader eyebrow={project.projectNumber} title="Procurement" description="Manage project purchasing requirements from request through order and delivery." actions={<Button onClick={()=>setAdding(true)}><Plus size={16}/>New request</Button>}/><section className="metrics"><MetricCard label="Requests" value={data.length} detail="Procurement register" icon={<ClipboardList size={19}/>}/><MetricCard label="Ordered" value={data.filter(x=>["ordered","partially-delivered"].includes(x.status)).length} detail="Active purchase orders" icon={<ShoppingCart size={19}/>}/><MetricCard label="Critical" value={data.filter(x=>x.priority==="critical"&&!["delivered","cancelled"].includes(x.status)).length} detail="Requires attention" icon={<AlertTriangle size={19}/>}/><MetricCard label="Open estimated value" value={new Intl.NumberFormat("en-AE",{notation:"compact",maximumFractionDigits:1}).format(exposure)} detail="AED open requirements" icon={<PackageCheck size={19}/>}/></section><section className="card"><ProcurementTable items={data} onEdit={setEditing} onDelete={setDeleting}/></section><Dialog open={adding} title="New procurement request" description="Create a purchasing requirement and optionally link it to the material register." onClose={()=>setAdding(false)}><ProcurementForm materials={materials.data??[]} onCancel={()=>setAdding(false)} onSubmit={async values=>{await create.mutateAsync({...values,projectId:project.id});setAdding(false)}}/></Dialog><Dialog open={!!editing} title="Edit procurement request" description="Update supplier, commercial value, order and delivery status." onClose={()=>setEditing(undefined)}>{editing&&<ProcurementForm materials={materials.data??[]} defaultValues={editing} onCancel={()=>setEditing(undefined)} onSubmit={async values=>{await update.mutateAsync({id:editing.id,input:{...values,projectId:project.id}});setEditing(undefined)}}/>}</Dialog><ConfirmationDialog open={!!deleting} title="Delete procurement request?" description="This removes the selected requirement from the procurement register." confirmLabel="Delete request" danger onClose={()=>setDeleting(undefined)} onConfirm={async()=>{if(deleting)await remove.mutateAsync(deleting);setDeleting(undefined)}}/></>;
+  if(query.isLoading||materials.isLoading)return <div className="grid gap-2"><Skeleton/><Skeleton/><Skeleton/></div>;
+  if(query.isError||materials.isError)return <ErrorState title="Unable to load procurement" description="Procurement data could not be retrieved." onRetry={()=>{void query.refetch();void materials.refetch()}}/>;
+
+  const data=query.data??[];
+  const exposure=data.filter(x=>!["delivered","cancelled"].includes(x.status)).reduce((sum,item)=>sum+item.estimatedValue,0);
+  const ordered=data.filter(x=>["ordered","partially-delivered"].includes(x.status)).length;
+  const critical=data.filter(x=>x.priority==="critical"&&!["delivered","cancelled"].includes(x.status)).length;
+
+  return <>
+    <PageHeader eyebrow={project.projectNumber} title="Procurement" actions={<Button onClick={()=>setAdding(true)}><Plus size={16}/>New request</Button>}/>
+    <section className="grid gap-3 sm:grid-cols-3">
+      <MetricCard label="Ordered" value={ordered} icon={<ShoppingCart size={18}/>}/>
+      <MetricCard label="Critical" value={critical} icon={<AlertTriangle size={18}/>}/>
+      <MetricCard label="Open value" value={"AED "+compact(exposure)} icon={<PackageCheck size={18}/>}/>
+    </section>
+    <div className="mt-4"><ProcurementTable items={data} onEdit={setEditing} onDelete={setDeleting}/></div>
+    <Dialog open={adding} title="New procurement request" onClose={()=>setAdding(false)}>
+      <ProcurementForm materials={materials.data??[]} onCancel={()=>setAdding(false)} onSubmit={async values=>{await create.mutateAsync({...values,projectId:project.id});setAdding(false)}}/>
+    </Dialog>
+    <Dialog open={!!editing} title="Edit procurement request" onClose={()=>setEditing(undefined)}>
+      {editing&&<ProcurementForm materials={materials.data??[]} defaultValues={editing} onCancel={()=>setEditing(undefined)} onSubmit={async values=>{await update.mutateAsync({id:editing.id,input:{...values,projectId:project.id}});setEditing(undefined)}}/>}
+    </Dialog>
+    <ConfirmationDialog open={!!deleting} title="Delete procurement request?" description="This removes the request from the project." confirmLabel="Delete" danger onClose={()=>setDeleting(undefined)} onConfirm={async()=>{if(deleting)await remove.mutateAsync(deleting);setDeleting(undefined)}}/>
+  </>;
 }
