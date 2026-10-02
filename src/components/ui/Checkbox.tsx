@@ -1,3 +1,9 @@
 import { forwardRef,type InputHTMLAttributes,type ReactNode } from "react";
+import { cn } from "@/lib/utils";
+
 export type CheckboxProps=InputHTMLAttributes<HTMLInputElement>&{label?:ReactNode};
-export const Checkbox=forwardRef<HTMLInputElement,CheckboxProps>(function Checkbox({className="",label,...props},ref){const input=<input ref={ref} type="checkbox" className={`size-4 rounded border-slate-300 text-blue-600 accent-blue-600 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-950 ${className}`.trim()} {...props}/>;return label?<label className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">{input}<span>{label}</span></label>:input});
+
+export const Checkbox=forwardRef<HTMLInputElement,CheckboxProps>(function Checkbox({className,label,...props},ref){
+  const input=<input ref={ref} type="checkbox" className={cn("size-4 rounded border border-input accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",className)} {...props}/>;
+  return label?<label className="inline-flex items-center gap-2 text-sm">{input}<span>{label}</span></label>:input;
+});

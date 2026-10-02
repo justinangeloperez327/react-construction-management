@@ -1,4 +1,12 @@
 import type { ReactNode } from "react";
 type Tone="info"|"success"|"warning"|"danger";
-const bars:Record<Tone,string>={info:"border-l-blue-500",success:"border-l-emerald-500",warning:"border-l-amber-500",danger:"border-l-red-500"};
-export function Toast({tone="info",title,children,onDismiss}:{tone?:Tone;title:string;children?:ReactNode;onDismiss?:()=>void}){return <div className={`flex w-[min(380px,calc(100vw-32px))] justify-between gap-3 rounded-xl border border-slate-200 border-l-4 bg-white px-3.5 py-3 shadow-xl dark:border-slate-700 dark:bg-slate-900 ${bars[tone]}`} role={tone==="danger"?"alert":"status"}><div><strong className="text-sm font-semibold">{title}</strong>{children&&<div className="mt-1 text-[13px] text-slate-500 dark:text-slate-400">{children}</div>}</div>{onDismiss&&<button className="text-xl leading-none text-slate-400 hover:text-slate-700 dark:hover:text-slate-200" onClick={onDismiss} aria-label="Dismiss notification">×</button>}</div>}
+
+export function Toast({tone="info",title,children,onDismiss}:{tone?:Tone;title:string;children?:ReactNode;onDismiss?:()=>void}){
+  return <div className="flex w-[min(380px,calc(100vw-2rem))] justify-between gap-4 rounded-lg border bg-background p-4 text-sm shadow-lg" role={tone==="danger"?"alert":"status"}>
+    <div>
+      <strong className={tone==="danger"?"font-medium text-destructive":"font-medium"}>{title}</strong>
+      {children&&<div className="mt-1 text-sm text-muted-foreground">{children}</div>}
+    </div>
+    {onDismiss&&<button className="text-lg leading-none text-muted-foreground hover:text-foreground" onClick={onDismiss} aria-label="Dismiss notification">×</button>}
+  </div>;
+}

@@ -1,2 +1,9 @@
 import { Button } from "./Button";
-export function ErrorState({title="Unable to load data",description="The requested information could not be retrieved.",onRetry}:{title?:string;description?:string;onRetry?:()=>void}){return <div className="rounded-xl border border-red-200 bg-red-50 px-6 py-10 text-center dark:border-red-900 dark:bg-red-950/40" role="alert"><strong className="font-semibold text-red-900 dark:text-red-200">{title}</strong><p className="mx-auto mt-2 mb-4 max-w-[520px] text-sm leading-6 text-red-700/80 dark:text-red-300/80">{description}</p>{onRetry&&<Button variant="secondary" onClick={onRetry}>Try again</Button>}</div>}
+
+export function ErrorState({title="Unable to load data",description="The requested information could not be retrieved.",onRetry}:{title?:string;description?:string;onRetry?:()=>void}){
+  return <div className="rounded-lg border p-6 text-center" role="alert">
+    <h3 className="text-sm font-medium">{title}</h3>
+    <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">{description}</p>
+    {onRetry&&<div className="mt-4"><Button variant="secondary" onClick={onRetry}>Try again</Button></div>}
+  </div>;
+}

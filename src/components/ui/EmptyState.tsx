@@ -1,2 +1,9 @@
 import type { ReactNode } from "react";
-export function EmptyState({title,description,action}:{title:string;description:string;action?:ReactNode}){return <div className="px-6 py-12 text-center" role="status"><strong className="font-semibold text-slate-900 dark:text-slate-100">{title}</strong><p className="mx-auto mt-2 mb-4 max-w-[520px] text-sm leading-6 text-slate-500 dark:text-slate-400">{description}</p>{action}</div>}
+
+export function EmptyState({title,description,action}:{title:string;description:string;action?:ReactNode}){
+  return <div className="flex min-h-40 flex-col items-center justify-center px-6 py-10 text-center" role="status">
+    <h3 className="text-sm font-medium">{title}</h3>
+    <p className="mt-1 max-w-md text-sm text-muted-foreground">{description}</p>
+    {action&&<div className="mt-4">{action}</div>}
+  </div>;
+}

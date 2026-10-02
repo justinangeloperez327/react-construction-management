@@ -1,1 +1,6 @@
-export function Spinner({label="Loading"}:{label?:string}){return <span className="inline-flex" role="status"><span className="size-[18px] animate-spin rounded-full border-2 border-slate-300 border-t-blue-600 dark:border-slate-700 dark:border-t-blue-400" aria-hidden="true"/><span className="sr-only">{label}</span></span>}
+export function Spinner({label="Loading"}:{label?:string}){
+  return <span className="inline-flex" role="status">
+    <span className="size-4 animate-spin rounded-full border-2 border-muted border-t-foreground" aria-hidden="true"/>
+    <span className="sr-only">{label}</span>
+  </span>;
+}
