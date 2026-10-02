@@ -6,9 +6,7 @@
     <meta name="color-scheme" content="light dark" />
     <script>
       try {
-        const themes=["default","coffee","mint","forest","office"];
-        const savedColorTheme=localStorage.getItem("construction-management-color-theme");
-        document.documentElement.dataset.appTheme=themes.includes(savedColorTheme) ? savedColorTheme : "default";
+        localStorage.removeItem("construction-management-color-theme");
         const saved=localStorage.getItem("construction-management-theme");
         const dark=saved==="dark"||(saved!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);
         document.documentElement.classList.toggle("dark",dark);
