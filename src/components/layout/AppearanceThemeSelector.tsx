@@ -38,11 +38,11 @@ export function AppearanceThemeSelector(){
         aria-checked={selected}
         key={item.id}
         onClick={()=>{setTheme(item.id);applyTheme(item.id)}}
-        className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition ${selected?"border-[var(--color-primary)] bg-[var(--theme-soft)] text-[var(--theme-soft-text)]":"border-slate-200 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800"}`}
+        className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition ${selected?"border-[var(--color-primary)] bg-[var(--theme-soft)] text-[var(--theme-soft-text)]":"border-[var(--color-border)] hover:bg-[var(--theme-soft)]"}`}
       >
         <span className="font-medium">{item.name}</span>
         <span className="flex -space-x-1" aria-hidden="true">
-          {item.swatches.map(color=><span key={color} className="size-4 rounded-full border border-white/80 shadow-sm dark:border-slate-900" style={{backgroundColor:color}}/>)}
+          {item.swatches.map(color=><span key={color} className="size-4 rounded-full border border-white/80 shadow-sm" style={{backgroundColor:color}}/>)}
         </span>
       </button>;
     })}

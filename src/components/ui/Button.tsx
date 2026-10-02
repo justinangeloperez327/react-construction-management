@@ -4,9 +4,9 @@ type Props=ButtonHTMLAttributes<HTMLButtonElement>&{variant?:Variant};
 
 const variants:Record<Variant,string>={
   primary:"app-button-primary",
-  secondary:"border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800",
+  secondary:"border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:bg-[var(--theme-soft)]",
   danger:"border-red-700 bg-red-700 text-white hover:bg-red-800 dark:border-red-500 dark:bg-red-600 dark:hover:bg-red-500",
-  ghost:"border-transparent bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+  ghost:"border-transparent bg-transparent text-[var(--color-text)] hover:bg-[var(--theme-soft)]"
 };
 
 export function Button({variant="primary",className="",...props}:Props){
