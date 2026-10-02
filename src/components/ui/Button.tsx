@@ -10,5 +10,5 @@ const variants:Record<Variant,string>={
 };
 
 export function Button({variant="primary",className="",...props}:Props){
-  return <button className={`inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border px-3.5 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 app-focus disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:shrink-0 ${variants[variant]} ${className}`.trim()} {...props}/>;
+  return <button className={`inline-flex min-h-9 items-center justify-center gap-1.5 border px-3 py-1.5 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-2 app-focus disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:shrink-0 ${variants[variant]} ${className}`.trim()} {...props}/>;
 }

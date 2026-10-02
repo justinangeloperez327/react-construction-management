@@ -9,12 +9,12 @@ export function AppShell(){
   const openNavigation=useCallback(()=>setNavigationOpen(true),[]);
   const closeNavigation=useCallback(()=>setNavigationOpen(false),[]);
 
-  return <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text)] transition-colors lg:grid lg:grid-cols-[252px_minmax(0,1fr)]">
-    <a className="fixed left-4 -top-16 z-[100] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-2.5 text-sm font-semibold shadow-lg focus:top-3" href="#main-content">Skip to content</a>
+  return <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text)] transition-colors lg:grid lg:grid-cols-[236px_minmax(0,1fr)]">
+    <a className="fixed left-3 -top-16 z-[100] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[13px] font-medium shadow-md focus:top-3" href="#main-content">Skip to content</a>
     <Sidebar open={navigationOpen} onClose={closeNavigation}/>
     <div className="min-w-0">
       <AppHeader onMenu={openNavigation}/>
-      <main className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-7 lg:py-7" id="main-content" tabIndex={-1}>
+      <main className="mx-auto max-w-[1600px] px-4 py-4 sm:px-5 lg:px-6 lg:py-5" id="main-content" tabIndex={-1}>
         <Breadcrumbs/>
         <Outlet/>
       </main>
